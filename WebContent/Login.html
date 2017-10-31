@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/login.css" rel="stylesheet">
+<title>登录</title>
+
+</head>
+<body>
+	<!-- <h2 style="text-align: center;">Welcome</h2> -->
+	<br/>
+	<br/>
+	<a href="http://www.baidu.com">
+	<img src="images/富士山.png" class="img-circle" id="imageHead" alt="富士山">
+	</a>
+	<br/>
+	<form name="loginform" id="loginform" action="Check" method="post">
+
+		<p>
+			<label for="user_login" >用户名<br />
+			 <input type="text"
+				name="Account" id="user_login" class="input" value="" size="20"
+				placeholder="字母和数字,长度6-20位" pattern="[a-zA-Z0-9]{3,20}"
+				required="required"
+				oninvalid="setCustomValidity('请输入大小写字母和数字,长度3-20位!')"
+				oninput="setCustomValidity('')">
+				</label>
+		</p>
+		<p>
+			<label for="user_pass">密码<br />
+			 <input type="password"
+				name="Password" id="user_pass" class="input" value="" size="20"
+				placeholder="" pattern="[a-zA-Z0-9]{6,20}" required="required"
+				oninvalid="setCustomValidity('请输入大小写字母和数字,长度6-20位!')"
+				oninput="setCustomValidity('')">
+				</label>
+		</p>
+		<p class="forgetmenot">
+			<label for="rememberme"><input name="rememberme"
+				type="checkbox" id="rememberme" value="forever" /> 记住我的登录信息</label>
+		</p>
+		<p class="submit">
+			<button type="submit" class="btn btn-primary">登录</button>
+		</p>
+		<p id="nav">
+			<a href="Register.html">注册</a> | <a href="FindPassword.html"
+				title="找回密码">忘记密码？</a>
+		</p>
+	</form>
+<script>
+var test=document.getElementById("");
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+
+<web-app>
+
+	<servlet>
+		<!-- 类名 -->
+		<servlet-name>Check</servlet-name>
+		<!-- 所在的包 -->
+		<servlet-class>LoginCheck.Check</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+
+		<servlet-name>Check</servlet-name>
+		<url-pattern>/Check</url-pattern>
+
+	</servlet-mapping>
+	
+	<welcome-file-list>
+	<welcome-file>Login.html</welcome-file>
+	</welcome-file-list>
+</web-app>
+ 
