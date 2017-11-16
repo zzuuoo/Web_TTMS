@@ -18,8 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
 
 import bean.employee;
+import bean.studio;
 import bean.user;
+import net.sf.json.JSONArray;
 import service.EmployeeSrv;
+import service.StudioSrv;
 import service.UserSrv;
 
 import java.sql.Connection;
@@ -54,21 +57,22 @@ public class Check extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
 		System.out.println("清了session");
 //         request.getSession().setAttribute("login", null);
 //         request.getSession().setAttribute("a", null);
 //         request.getSession().setAttribute("b", null);
 
 		  request.getSession().invalidate();//清空所有session
+		  
+		  //获取登录信息
 		  String page = "/error.jsp";
 	      request.setCharacterEncoding("utf-8");
 	      String name = request.getParameter("Account");
 	      String password = request.getParameter("Password");
 	      String remeber = request.getParameter("rememberme");
 	      
-//	      response.setCharacterEncoding("utf-8");
-//	      response.setContentType("text/html;charset=utf-8");
-//	      PrintWriter out = response.getWriter();
 	      
 	      boolean checkOK = false;
 	      
@@ -95,10 +99,7 @@ public class Check extends HttpServlet {
 				}
 //				page="/Lmain.html";
 				page="/dir.jsp";
-//				 request.getRequestDispatcher("/Lmain.html").forward(request, response);
 			}else{
-
-//				 request.getRequestDispatcher("/LoginFailed.html").forward(request, response);
 				 page="/LoginFailed.html";
 			}
 			 request.getRequestDispatcher(page).forward(request, response);

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>后台布局</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="stylesheet" href="./layui/layuicss/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo"><em>最接地气剧院票务管理系统</em></div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a onclick="alert('如有问题，你可以发送邮件至 18829491124@163.com')">联系我们</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="./img/login.jpg" class="layui-nav-img">
+          最接地气小组
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="./index.html">退了</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">管理演出厅</a>
+          <dl class="layui-nav-child">
+            <dd><a href="house.html">查找/删除演出厅</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+          <a href="javascript:;">管理座位</a>
+          <dl class="layui-nav-child">
+            <dd><a href="seat.html">查找/删除座位</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+          <a href="javascript:;">管理人员</a>
+          <dl class="layui-nav-child">
+            <dd><a href="user.html">查看/删除用户</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+ <div class="layui-body">
+
+<div id="main">
+
+<center>
+   <h2 class="top_title">jQuery座位管理</h2>
+</center>
+
+   <div class="demo">
+      <div id="seat-map">
+      <div class="front">屏幕</div>
+    </div>
+
+    <div class="booking-details">
+     <br>
+     <br>
+     <br>
+
+      <button class="checkout-button" onclick="update_seat()">确定修改</button>
+
+      <div id="legend"></div>
+    </div>
+    <div style="clear:both"></div>
+   </div>
+
+  <br/>
+</div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © 最接地气小组@软件1501
+  </div>
+</div>
+<script src="./layui/layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+});
+</script>
+</body>
+</html>

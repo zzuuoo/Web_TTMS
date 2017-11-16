@@ -34,8 +34,8 @@ public class EmployeeFilter implements Filter{
 	            request.setAttribute("desc", "无权访问a路径");
 	            request.getRequestDispatcher("/error.jsp").forward(request, response);
 	        }
-	        else
-	            chain.doFilter(request, response);
+	        
+	        chain.doFilter(request, response);
 		
 	}
 

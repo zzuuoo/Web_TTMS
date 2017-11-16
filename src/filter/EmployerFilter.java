@@ -45,11 +45,9 @@ public class EmployerFilter implements Filter {
 	            request.setAttribute("desc", "无权访问b路径");
 	            request.getRequestDispatcher("/error.jsp").forward(request, response);
 	        }
-	        else
-	            chain.doFilter(request, response);
-
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
+	   
+	        chain.doFilter(request, response);
+	        
 	}
 
 	/**

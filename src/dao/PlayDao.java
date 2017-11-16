@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 
 import bean.play;
+import bean.studio;
 import idao.iPlayDAO;
 import tomcatDb.ConnectionManager;
 //private int play_id;
@@ -96,8 +98,45 @@ public class PlayDao implements iPlayDAO{
 
 	@Override
 	public List<play> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<play> plays = null;
+		play p=null;
+		plays=new LinkedList<play>();
+  		try {
+  			String sql = "select * from play	";
+
+  		//用线程池	
+  			ConnectionManager cManager = ConnectionManager.getInstance();
+  			Connection connection=null;
+  			connection =  cManager.getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeQuery(sql);
+			ResultSet rst = pstmt.executeQuery(sql);
+			
+  			if (rst!=null) {
+  				while(rst.next()){
+  						p=new play();
+  						p.setPlay_id(rst.getInt("play_id"));
+  						p.setPlay_image(rst.getString("play_image"));
+  						p.setPlay_introduction(rst.getString("play_introduction"));
+  						p.setPlay_lang_id(rst.getInt("play_lang_id"));
+  						p.setPlay_length(rst.getInt("play_length"));
+  						p.setPlay_name(rst.getString("play_name"));
+  						p.setPlay_status(rst.getInt("play_status"));
+  						p.setPlay_ticket_price(rst.getDouble("play_ticket_price"));
+  						p.setPlay_type_id(rst.getInt("play_type_id"));
+  						plays.add(p);
+  	
+  						
+  				}
+  			}
+
+  			cManager.close(rst, pstmt, connection);
+  			
+  		} catch (Exception a) {
+  			a.printStackTrace();
+  		}
+  			
+  		return plays;
 	}
 
 	@Override

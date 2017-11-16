@@ -1,12 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cn">
 <head>
-<title>
-b
-</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AJAX获取studio信息(返回JSON)</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script>
+var req;
+function getStudio()
+{
+	var url = "../GetAllStudio";
+    if (window.XMLHttpRequest)
+    {
+        req = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject)
+    {
+        req = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+	
+	if (req) 
+	{
+		//采用POST方式，异步传输
+		req.open("post", url, true);
+		//POST方式，必须加入如下头信息设定
+		req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		req.onreadystatechange = complete;
+		req.send();
+	}
+}
+//回调函数
+function complete() 
+{
+	
+	if (req.readyState == 4 && req.status == 200)
+	{
+		//给返回的json串加上圆括号，转变成json对象:说明eval函数
+		var json =  eval("(" + req.responseText + ")");
+	
+		
+		document.getElementById("studio_id").innerText="编号:" + json[0].studio_id;
+		document.getElementById("studio_name").innerText="厅名:" + json[0].studio_name;
+		document.getElementById("studio_row_count").innerText="行:" + json[0].studio_row_count;
+		document.getElementById("studio_col_count").innerText="列:" + json[0].studio_col_count;
+		document.getElementById("studio_flag").innerText="flag:" + json[0].studio_flag;
+		document.getElementById("studio_introduction").innerText="简介:" + json[0].studio_introduction;
+	}
+}
+</script>
 </head>
-<body>
-<h1>b</h1>
-
+<body onload="getStudio()">
+	<div class="col-md-8">
+		<label style="font-size:25px;color:red">AJAX获取studio信息(返回JSON)</label><br>
+		<label style="font-size:25px" id="studio_id"></label><br>
+		<label style="font-size:25px" id="studio_name"></label><br>
+		<label style="font-size:25px" id="studio_row_count"></label><br>
+		<label style="font-size:25px" id="studio_col_count"></label><br>
+		<label style="font-size:25px" id="studio_introduction"></label><br>
+		<label style="font-size:25px" id="studio_flag"></label><br>
+		<input type="button" onclick="getStudio()" value="啊啊啊啊">
+	</div>
 </body>
 </html>
