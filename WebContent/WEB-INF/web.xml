@@ -1,22 +1,23 @@
-
-<web-app>
-
-	<servlet>
-		<!-- 类名 -->
-		<servlet-name>Check</servlet-name>
-		<!-- 所在的包 -->
-		<servlet-class>LoginCheck.Check</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-
-		<servlet-name>Check</servlet-name>
-		<url-pattern>/Check</url-pattern>
-
-	</servlet-mapping>
-	
-	<welcome-file-list>
-	<welcome-file>Login.html</welcome-file>
-	</welcome-file-list>
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  
+  <servlet>
+    <servlet-name>Check</servlet-name>
+    <servlet-class>servlet.Check</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Check</servlet-name>
+    <url-pattern>/Check</url-pattern>
+  </servlet-mapping>
+  
+  
+  <welcome-file-list>
+    <welcome-file>Login.html</welcome-file>
+  </welcome-file-list>
+  <resource-ref>
+    <description>dbcpconnect</description>
+    <res-ref-name>jdbc/mydb</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
 </web-app>
- 

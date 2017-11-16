@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <!-- 注意： useUnicode=true后的&要改为&amp;-->
+    <!-- 指定资源池的Resource的JNDI的名字，就是给连接池起的名字 --> 
+    <!-- 管理权限，指定管理Resource的Manager，可以是Container或Application -->  
+    <!--指出Resource所属的类名，是什么类型的数据源-->  
+    <!-- 连接池最大激活的连接数，设为0表示无限制-->  
+    <!-- 连接池中最多可空闲的连接数 -->  
+    <!-- 为连接最大的等待时间，单位毫秒，如果超过此时间将接到异常。设为-1表示无限制-->  
+    <!-- 数据库用户名 -->  
+    <!-- 数据库密码 -->  
+    <!-- 数据库驱动类 -->  
+    <!-- 数据库连接url-->  
+    <Resource
+    name="jdbc/mydb" 
+    auth="Container" 
+    type="javax.sql.DataSource" 
+    maxActive="50" 
+    maxIdle="20" 
+    maxWait="10000" 
+    username="root" 
+    password="123456" 
+    driverClassName="com.mysql.jdbc.Driver" 
+    url="jdbc:mysql://localhost:3306/ttms?useUnicode=true&amp;characterEncoding=utf-8" />
+</Context>

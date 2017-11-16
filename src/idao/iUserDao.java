@@ -2,14 +2,14 @@ package idao;
 
 import java.util.List;
 
-import bean.UserInfo;
+import bean.user;
 
 public interface iUserDao {
 
-	public int insert(UserInfo emp);
-	public int update(UserInfo emp);
-	public int delete(String name);
-	public UserInfo select(String condt); 
-	public List<UserInfo> selectAll(); 
-	public List<UserInfo> selectwhat(String condt) ;
+	public int insert(user u);
+	public int update(user u);
+	public int delete(String emp_no);
+	public user select(String condt); 
+	public List<user> selectAll(); 
+	public List<user> selectwhat(String condt) ;
 }

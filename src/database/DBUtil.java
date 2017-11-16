@@ -1,5 +1,5 @@
 ﻿package database;
-
+//没用线程池的数据库连接工具类，该类现在不用
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;

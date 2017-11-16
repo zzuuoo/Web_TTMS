@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 
-import bean.UserInfo;
+import bean.user;
 import idao.DAOFactory;
 import idao.iUserDao;
 
@@ -10,19 +10,22 @@ import idao.iUserDao;
 public class UserSrv {
 	private iUserDao uDAO=DAOFactory.creatUserDAO();
 	
-	public int add(UserInfo u){
-		return 0; 		
+	public int add(user u){
+		return uDAO.insert(u); 		
 	}
 	
-	public int modify(UserInfo u){
-		return 0; 		
+	public int modify(user u){
+		return uDAO.update(u); 		
 	}
 	
-	public int delete(int ID){
-		return 0; 		
+	public int delete(String emp_no){
+		return uDAO.delete(emp_no); 		
 	}
 	
-	public List<UserInfo> FetchAll(){
+	public List<user> FetchAll(){
 		return uDAO.selectAll();
+	}
+	public List<user> Fetch(String condt){
+		return uDAO.selectwhat(condt);
 	}
 }

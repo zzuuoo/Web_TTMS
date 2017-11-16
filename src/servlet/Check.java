@@ -1,4 +1,4 @@
-package LoginCheck;
+package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,9 +15,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
 
-import bean.UserInfo;
-import database.DBUtil;
+import bean.employee;
+import bean.user;
+import service.EmployeeSrv;
 import service.UserSrv;
 
 import java.sql.Connection;
@@ -39,14 +41,10 @@ public class Check extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-    
-    
-
-    
+     
     public void init() throws ServletException
     {
         // 执行必需的初始化
-       
        
     }
 
@@ -56,76 +54,54 @@ public class Check extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		
+		System.out.println("清了session");
+//         request.getSession().setAttribute("login", null);
+//         request.getSession().setAttribute("a", null);
+//         request.getSession().setAttribute("b", null);
+
+		  request.getSession().invalidate();//清空所有session
+		  String page = "/error.jsp";
 	      request.setCharacterEncoding("utf-8");
 	      String name = request.getParameter("Account");
 	      String password = request.getParameter("Password");
 	      String remeber = request.getParameter("rememberme");
 	      
-	      response.setCharacterEncoding("utf-8");
-	      response.setContentType("text/html;charset=utf-8");
-	      PrintWriter out = response.getWriter();
+//	      response.setCharacterEncoding("utf-8");
+//	      response.setContentType("text/html;charset=utf-8");
+//	      PrintWriter out = response.getWriter();
 	      
 	      boolean checkOK = false;
 	      
-	      
+	      user us=null;
 	   
 	  		// TODO Auto-generated method stub
-	  		List<UserInfo> userList = new UserSrv().FetchAll();
-//	  		UserInfo user;
-//	  		userList=new LinkedList<UserInfo>();
-//	  		try {
-//	  			String sql = "select name, password from user";
-//	  			
-//	  			DBUtil db = new DBUtil();
-//	  			if(!db.openConnection()){
-//	  				System.out.print("fail to connect database");
-//	  				return ;
-//	  			}
-//	  			ResultSet rst = db.execQuery(sql);
-//	  			if (rst!=null) {
-//	  				while(rst.next()){
-//	  					user=new UserInfo(rst.getString("name"),rst.getString("password"));
-//	  					userList.add(user);
-//	  				}
-//	  			}
-//	  			db.close(rst);
-//	  			db.close();
-//	  		} catch (Exception e) {
-//	  			e.printStackTrace();
-//	  		}
-//	  			
-	  	
-	      
-	      
-	      
-			for(UserInfo u:userList) {
-				if(name.equals(u.getName())&&password.equals(u.getPassword())) {
+	  		List<user> userList = new UserSrv().Fetch("emp_no='"+name+"'");		
+      
+			for(user u:userList) {
+				if(name.equals(u.getEmp_no())&&password.equals(u.getEmp_pass())) {
 					checkOK=true;
+					us=u;
 				}
 			}
 			if(checkOK){
-				//通过cookie保存账号密码
-//				if(remeber!="") {
-//				Cookie ck = new Cookie("Account",name);
-//				ck.setMaxAge(60*60*24*7);
-//				response.addCookie(ck);
-//				ck = new Cookie("Password",password);
-//				ck.setMaxAge(60*60*24*7);
-//				response.addCookie(ck);
-//				}
-				RequestDispatcher  dispatcher   = 
-				           request.getRequestDispatcher("Lmain.html");
-				//将request、response可一起带到新页面
-				dispatcher.forward(request,response);
+
+				request.getSession().setAttribute("login", "ok");
+				request.setAttribute("name", name);
+				if(us.getType()==1) {		
+			            request.getSession().setAttribute("a", "ok");
+				}else {
+
+		            request.getSession().setAttribute("b", "ok");
+				}
+//				page="/Lmain.html";
+				page="/dir.jsp";
+//				 request.getRequestDispatcher("/Lmain.html").forward(request, response);
 			}else{
-				RequestDispatcher  dispatcher   = 
-				           request.getRequestDispatcher("LoginFailed.html");
-				//将request、response可一起带到新页面
-				dispatcher.forward(request,response);
-				
+
+//				 request.getRequestDispatcher("/LoginFailed.html").forward(request, response);
+				 page="/LoginFailed.html";
 			}
+			 request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	/**
