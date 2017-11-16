@@ -29,24 +29,17 @@ public class EmployeeDao implements iEmployee{
 			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			//获取PreparedStatement借口实例
 			
-			//非空值为空，则不能插入
-			if(u.getEmp_name()==null||u.getEmp_no()==null||(u.getEmp_id()+"").equals("")) 
-			{
-				return 0;
-			}
-			else 
-			{
-				pstmt.setString(1, u.getEmp_no());
-				pstmt.setString(2, u.getEmp_name());
-				pstmt.setString(3, u.getEmp_tel_num());
-				pstmt.setString(4, u.getEmp_addr());
-				pstmt.setString(5, u.getEmp_email());
+		
+			pstmt.setString(1, u.getEmp_no());
+			pstmt.setString(2, u.getEmp_name());
+			pstmt.setString(3, u.getEmp_tel_num());
+			pstmt.setString(4, u.getEmp_addr());
+			pstmt.setString(5, u.getEmp_email());
 				//初始化sql中的参数
 				
-				pstmt.executeUpdate();
+			pstmt.executeUpdate();
 				//执行sql语句
 				
-			}
 			
 			ResultSet rst = pstmt.getGeneratedKeys();	
 			//获取结果集
@@ -121,7 +114,7 @@ public class EmployeeDao implements iEmployee{
 		employee e=null;
   		try {
   			String sql = "select * from employee	";
-  			if(condt!=null&&condt!=null) {
+  			if(condt!=null&&condt!="") {
   				sql=sql+"where "+condt;
   			}
   		//用线程池	
