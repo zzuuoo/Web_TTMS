@@ -26,4 +26,7 @@ public class EmployeeSrv {
 	public List<employee> Fetch(String condt){
 		return eDAO.selectwhat(condt);
 	}		
+	public employee FetchOne(String condt) {
+		return eDAO.select(condt);
+	}
 }

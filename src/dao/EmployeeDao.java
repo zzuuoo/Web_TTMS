@@ -128,6 +128,7 @@ public class EmployeeDao implements iEmployee{
   			if (rst!=null) {
   				while(rst.next()){
   						e = new employee();
+  						e.setEmp_no(rst.getString("emp_no"));
   						e.setEmp_addr(rst.getString("emp_addr"));
   						e.setEmp_email(rst.getString("emp_email"));
   						e.setEmp_id(rst.getInt("emp_id"));
@@ -165,6 +166,7 @@ public class EmployeeDao implements iEmployee{
   			if (rst!=null) {
   				while(rst.next()){
   						e = new employee();
+  						e.setEmp_no(rst.getString("emp_no"));
   						e.setEmp_addr(rst.getString("emp_addr"));
   						e.setEmp_email(rst.getString("emp_email"));
   						e.setEmp_id(rst.getInt("emp_id"));
@@ -205,6 +207,7 @@ public class EmployeeDao implements iEmployee{
   			if (rst!=null) {
   				while(rst.next()){
   						e = new employee();
+  						e.setEmp_no(rst.getString("emp_no"));
   						e.setEmp_addr(rst.getString("emp_addr"));
   						e.setEmp_email(rst.getString("emp_email"));
   						e.setEmp_id(rst.getInt("emp_id"));

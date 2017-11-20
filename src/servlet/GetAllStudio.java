@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -45,12 +46,19 @@ public class GetAllStudio extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("获取所有演出厅信息");
+		//字符流设置编码
 		response.setCharacterEncoding("UTF-8");
 		//获取所有演出厅信息
 		List<studio> lStudios = new StudioSrv().FetchAll();
 		System.out.println(lStudios.get(0).getStudio_name());
 		//把演出厅信息转换为json类型
 		JSONArray jsonArr = JSONArray.fromObject(lStudios);
+		
+//		字节流
+//		OutputStream ps = response.getOutputStream();  
+//        //这句话的意思，使得放入流的数据是gb2312格式  //经测试，有用
+//        ps.write(jsonArr.toString().getBytes("gb2312"));  
+//		ps.close();
 		//回答
         PrintWriter out = response.getWriter();
         out.write(jsonArr.toString());

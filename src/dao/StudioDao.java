@@ -72,14 +72,48 @@ public class StudioDao implements iStudioDAO{
 	}
 
 	@Override
-	public int update(studio p) {
-		// TODO Auto-generated method stub
+	public int update(studio stu) {
+		try {
+			String sql = "update studio set " + " studio_name ='"
+					+ stu.getStudio_name() + "', " + " studio_row_count = "
+					+ stu.getStudio_row_count() + ", " + " studio_col_count = "
+					+ stu.getStudio_col_count() + ", " + " studio_introduction = '"
+					+ stu.getStudio_introduction() + "' ,"+" studio_flag = "
+					+stu.getStudio_flag();
+
+			sql += " where studio_id = " + stu.getStudio_id();
+			ConnectionManager cManager = ConnectionManager.getInstance();
+			Connection connection =  cManager.getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeUpdate();
+			ResultSet rst = pstmt.getGeneratedKeys();	
+			cManager.close(rst, pstmt, connection);
+
+			return 1;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
 	@Override
 	public int delete(int s_id) {
-		// TODO Auto-generated method stub
+		try {
+			String sql = "delete from  studio ";
+			sql += " where studio_id = " + s_id;
+			ConnectionManager cManager = ConnectionManager.getInstance();
+			Connection connection =  cManager.getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeUpdate();
+			ResultSet rst = pstmt.getGeneratedKeys();	
+			cManager.close(rst, pstmt, connection);
+
+			return 1;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 

@@ -65,8 +65,30 @@ public class PlayDao implements iPlayDAO{
 	}
 
 	@Override
-	public int update(play p) {
-		
+	public int update(play stu) {
+		try {
+
+			String sql = "update play set "  + " play_name = '"
+					+ stu.getPlay_name() + "' ,"+"play_introduction = '"
+					+stu.getPlay_introduction()+"',"+"play_image='"
+					+stu.getPlay_image()+"',"+"play_length="
+					+stu.getPlay_length()+","+"play_ticket_price="
+					+stu.getPlay_ticket_price()+","+"play_status="
+					+stu.getPlay_status();
+
+			sql += " where play_id = " + stu.getPlay_id();
+			ConnectionManager cManager = ConnectionManager.getInstance();
+			Connection connection =  cManager.getConnection();
+			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeUpdate();
+			ResultSet rst = pstmt.getGeneratedKeys();	
+			cManager.close(rst, pstmt, connection);
+
+			return 1;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
@@ -109,7 +131,6 @@ public class PlayDao implements iPlayDAO{
   			Connection connection=null;
   			connection =  cManager.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstmt.executeQuery(sql);
 			ResultSet rst = pstmt.executeQuery(sql);
 			
   			if (rst!=null) {

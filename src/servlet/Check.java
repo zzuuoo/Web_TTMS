@@ -69,9 +69,9 @@ public class Check extends HttpServlet {
 		  //获取登录信息
 		  String page = "/error.jsp";
 	      request.setCharacterEncoding("utf-8");
-	      String name = request.getParameter("Account");
-	      String password = request.getParameter("Password");
-	      String remeber = request.getParameter("rememberme");
+	      String name = request.getParameter("username");
+	      String password = request.getParameter("password");
+//	      String remeber = request.getParameter("rememberme");
 	      
 	      
 	      boolean checkOK = false;
@@ -87,20 +87,22 @@ public class Check extends HttpServlet {
 					us=u;
 				}
 			}
+			List<employee> lemp = new EmployeeSrv().Fetch("emp_no = '"+name+"'");
 			if(checkOK){
 
 				request.getSession().setAttribute("login", "ok");
-				request.setAttribute("name", name);
+				request.setAttribute("emp_no", name);
+				request.setAttribute("emp_name", lemp.get(0).getEmp_name());
 				if(us.getType()==1) {		
-			            request.getSession().setAttribute("a", "ok");
+			            request.getSession().setAttribute("employee", "ok");
 				}else {
-
-		            request.getSession().setAttribute("b", "ok");
+		            request.getSession().setAttribute("employer", "ok");
 				}
 //				page="/Lmain.html";
 				page="/dir.jsp";
 			}else{
-				 page="/LoginFailed.html";
+				 request.getSession().setAttribute("desc", "账号或密码错误");
+				 page="/error.jsp";
 			}
 			 request.getRequestDispatcher(page).forward(request, response);
 	}

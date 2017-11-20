@@ -20,9 +20,6 @@ public class ScheduleDAO implements iScheduleDAO {
 	 
 	public int insert(schedule stu) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
-//		Calendar cld = Calendar.getInstance();
-//		cld.setTime(stu.getSched_time());
-		
 		try {
 			String sql = "insert into schedule(studio_id, play_id, sched_time, sched_ticket_price)"
 					+ " values(?,?,?)";
@@ -39,11 +36,11 @@ public class ScheduleDAO implements iScheduleDAO {
 			
 			pstmt.setInt(1, stu.getStudio_id());
 			pstmt.setInt(2, stu.getPlay_id());
-			pstmt.setDate(3, (Date) stu.getSched_time());
+			pstmt.setTimestamp(3,new java.sql.Timestamp(stu.getSched_time().getTime()));
 			pstmt.setDouble(4, stu.getSched_ticket_price());
 				//初始化sql中的参数
 				
-				pstmt.executeUpdate();
+			pstmt.executeUpdate();
 				//执行sql语句
 
 			ResultSet rst = pstmt.getGeneratedKeys();	

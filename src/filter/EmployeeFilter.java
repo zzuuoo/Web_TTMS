@@ -27,11 +27,11 @@ public class EmployeeFilter implements Filter{
 			throws IOException, ServletException {
 		  System.out.println("进入过滤器EmployeeFilter");
 	        HttpServletRequest req = (HttpServletRequest) request;
-	        String flag = (String) req.getSession().getAttribute("a");
+	        String flag = (String) req.getSession().getAttribute("employee");
 	        if (flag == null || !flag.equals("ok"))
 	        {
-	            System.out.println("无权访问a路径");
-	            request.setAttribute("desc", "无权访问a路径");
+	            System.out.println("无权访问employee路径");
+	            request.setAttribute("desc", "无权访问employee路径");
 	            request.getRequestDispatcher("/error.jsp").forward(request, response);
 	        }
 	        

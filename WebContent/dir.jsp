@@ -10,13 +10,6 @@ if(flag==null || !flag.equals("ok"))
     request.getRequestDispatcher("index.jsp").forward(request, response);
 }
 %>
-<script>
-
-function a(c)
-{
-	alert(c);
-	}
-</script>
 <html>
   <head>
     <base href="<%=basePath%>">
@@ -30,8 +23,7 @@ function a(c)
     </style>
   </head>
 <body>
-
-欢迎，${name} ! <br>
+欢迎，${emp_name} ! <br>
 a目录：<br>
 <a href="employee/a.html">employee/a.html</a><br>
 b目录：<br>

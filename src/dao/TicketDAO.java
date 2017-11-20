@@ -181,7 +181,7 @@ public class TicketDAO implements iTicketDAO {
 	}
 
 	 
-	public int lockticket(int ID, String time) {
+	public int lockTicket(int ID, String time) {
 		int rtn=0;
 		try {
 			String sql = "update ticket set ticket_status=1, ticket_locked_time='" + time + "'";
@@ -200,7 +200,7 @@ public class TicketDAO implements iTicketDAO {
 	}
 
 	 
-	public int unlockticket(int ID) {
+	public int unlockTicket(int ID) {
 		int rtn=0;
 		try {
 			String sql = "update ticket set ticket_status=0,ticket_locked_time = NULL ";

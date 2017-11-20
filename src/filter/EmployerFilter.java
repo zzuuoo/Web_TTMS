@@ -38,11 +38,11 @@ public class EmployerFilter implements Filter {
 		// TODO Auto-generated method stub
 		 System.out.println("进入过滤器EmployerFilter");
 	        HttpServletRequest req = (HttpServletRequest) request;
-	        String flag = (String) req.getSession().getAttribute("b");
+	        String flag = (String) req.getSession().getAttribute("employer");
 	        if (flag == null || !flag.equals("ok"))
 	        {
-	            System.out.println("无权访问b路径");
-	            request.setAttribute("desc", "无权访问b路径");
+	            System.out.println("无权访问employer路径");
+	            request.setAttribute("desc", "无权访问employer路径");
 	            request.getRequestDispatcher("/error.jsp").forward(request, response);
 	        }
 	   

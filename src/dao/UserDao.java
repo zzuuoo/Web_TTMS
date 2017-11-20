@@ -22,26 +22,21 @@ public class UserDao implements iUserDao{
 	public int insert(user u) {
 		try {
 
-			String sql = "insert into user(emp_no, emp_pass,type,Head_path)"
+			String sql = "insert into user"
 					+ " values(?,?,?,?)";
 			ConnectionManager cManager = ConnectionManager.getInstance();
 			Connection connection = cManager.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
-			if(u.getEmp_no()==null||u.getEmp_pass()==null||(u.getType()+"").equals("")) {
-				return 0;
-			}
 			
-			pstmt.setString(1, u.getEmp_no());
-			pstmt.setString(2, u.getEmp_pass());
+			pstmt.setString(1, u.getEmp_no()+"");
+			pstmt.setString(2, u.getEmp_pass()+"");
 			pstmt.setInt(3, u.getType());
-			pstmt.setString(4, u.getHead_path());
-			
+			pstmt.setString(4, u.getHead_path()+"");
 			pstmt.executeUpdate();
 			ResultSet rst = pstmt.getGeneratedKeys();	
 			cManager.close(rst, pstmt, connection);
 
-			
 			System.out.println("user插入成功");
 			return 1;
 			
