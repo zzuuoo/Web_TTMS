@@ -57,6 +57,17 @@ body{
   cursor: pointer;
   margin-top: 10px;
 }
+.choosetype {
+  float:left;
+  border:1px solid #333;
+  border-radius: 3px;
+  padding:6px;
+  padding-left: 162px;
+  margin-left:1em;
+  text-align-last:center;
+  color: initial;
+  background: transparent;
+}
 
 
 
@@ -72,19 +83,3 @@ body{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.

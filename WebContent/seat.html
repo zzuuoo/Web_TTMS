@@ -1,0 +1,207 @@
+<!--座位-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>后台布局</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="stylesheet" href="./layui/layuicss/layui.css">
+  <link rel="stylesheet" type="text/css" href="./seatcss/jquery.seat-charts.css">
+<link rel="stylesheet" type="text/css" href="./seatcss/style.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo"><em>最接地气剧院票务管理系统</em></div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a onclick="alert('如有问题，你可以发送邮件至 18829491124@163.com')">联系我们</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="./img/login.jpg" class="layui-nav-img">
+          最接地气小组
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="./index.html">退了</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">管理演出厅</a>
+          <dl class="layui-nav-child">
+            <dd><a href="house.html">查找/删除演出厅</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+          <a href="javascript:;">管理座位</a>
+          <dl class="layui-nav-child">
+            <dd><a href="seat.html">查找/删除座位</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+          <a href="javascript:;">管理人员</a>
+          <dl class="layui-nav-child">
+            <dd><a href="user.html">查看/删除用户</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+      <div class="wrapper">
+  <div class="container">
+  
+    <div id="seat-map">
+      <div class="front-indicator">影厅</div>
+    </div>
+    
+    <div class="booking-details">
+    
+      <h3>已选中的座位 (<span id="counter">0</span>):</h3>
+      
+      <ul id="selected-seats"></ul>
+      
+      <p>总价: <b>$<span id="total">0</span></b></p>
+      
+      <p><button class="checkout-button">结算</button></p>
+      
+      <div id="legend"></div>
+    </div>
+    
+  </div>
+</div>
+
+<script type="text/javascript" src="./seatjs/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="./seatjs/jquery.seat-charts.min.js"></script>
+<script type="text/javascript">
+var firstSeatLabel = 1;
+
+$(document).ready(function() {
+  var $cart = $('#selected-seats'),
+    $counter = $('#counter'),
+    $total = $('#total'),
+    sc = $('#seat-map').seatCharts({
+    map: [
+      'ff_ff',
+      'ff_ff',
+      'ee_ee',
+      'ee_ee',
+      'ee___',
+      'ee_ee',
+      'ee_ee',
+      'ee_ee',
+      'ee_ee',
+      'eeeee',
+    ],
+    seats: {
+      f: {
+        price   : 100,
+        classes : 'first-class', //your custom CSS class
+        category: '最佳角度'
+      },
+      e: {
+        price   : 40,
+        classes : 'economy-class', //your custom CSS class
+        category: '侧排'
+      }         
+    
+    },
+    naming : {
+      top : false,
+      getLabel : function (character, row, column) {
+        return firstSeatLabel++;
+      },
+    },
+    legend : {
+      node : $('#legend'),
+      items : [
+        [ 'f', 'available',   '最佳角度' ],
+        [ 'e', 'availathis.data()ble',   '侧排'],
+        [ 'f', 'unavailable', '已预定']
+      ]         
+    },
+    click: function () {
+      if (this.status() == 'available') {
+        $('<li>'+this.data().category+this.settings.label+'号座位'+'：<br/>价格：<b>$'+this.data().price+'</b> <a href="#" class="cancel-cart-item">[删除]</a></li>')
+          .attr('id','cart-item-'+this.settings.id)
+          .data('seatId', this.settings.id)
+          .appendTo($cart);
+        $counter.text(sc.find('selected').length+1);
+        $total.text(recalculateTotal(sc)+this.data().price);
+        
+        return 'selected';
+      } else if (this.status() == 'selected') {
+        //update the counter
+        $counter.text(sc.find('selected').length-1);
+        //and total
+        $total.text(recalculateTotal(sc)-this.data().price);
+      
+        //remove the item from our cart
+        $('#cart-item-'+this.settings.id).remove();
+      
+        //seat has been vacated
+        return 'available';
+      } else if (this.status() == 'unavailable') {
+        //seat has been already booked
+        return 'unavailable';
+      } else {
+        return this.style();
+      }
+    }
+  });
+
+  //this will handle "[cancel]" link clicks
+  $('#selected-seats').on('click', '.cancel-cart-item', function () {
+    //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
+    sc.get($(this).parents('li:first').data('seatId')).click();
+  });
+
+  //let's pretend some seats have already been booked
+  sc.get(['1_2', '4_1', '7_1', '7_2']).status('unavailable');
+
+});
+
+function recalculateTotal(sc) {
+  var total = 0;
+  
+  //basically find every selected seat and sum its price
+  sc.find('selected').each(function () {
+    total += this.data().price;
+  });
+  
+  return total;
+}
+
+</script>
+    </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    © 最接地气小组@软件1501
+  </div>
+</div>
+<script src="./layui/layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
+</body>
+</html>

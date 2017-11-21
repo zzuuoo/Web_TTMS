@@ -1,6 +1,12 @@
 package bean;
 
-public class sale_item {
+import java.io.Serializable;
+
+public class sale_item implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1390429093526081328L;
 	private int sale_item_id;
 	private int ticket_id;
 	private int sale_ID;

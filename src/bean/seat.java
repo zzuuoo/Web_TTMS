@@ -1,6 +1,12 @@
 package bean;
 
-public class seat {
+import java.io.Serializable;
+
+public class seat implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8693940514254107039L;
 	private int seat_id;
 	private int studio_id;
 	private int seat_row;

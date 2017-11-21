@@ -1,8 +1,13 @@
 package bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class sale {
+public class sale implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -991464548827292039L;
 	private int sale_ID;
 	private int emp_id;
 	private Date sale_time;

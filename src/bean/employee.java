@@ -1,6 +1,12 @@
 package bean;
 
-public class employee {
+import java.io.Serializable;
+
+public class employee implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3823066868914039563L;
 	private int emp_id;
 	private String emp_no;
 	private String emp_name;

@@ -1,6 +1,12 @@
 package bean;
 
-public class play {
+import java.io.Serializable;
+
+public class play implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2908610880493503611L;
 	private int play_id;
 	private int play_type_id;
 	private int play_lang_id;

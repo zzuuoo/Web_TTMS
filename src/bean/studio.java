@@ -1,6 +1,12 @@
 package bean;
 
-public class studio {
+import java.io.Serializable;
+
+public class studio implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8806239589432645997L;
 	private int studio_id;
 	private String studio_name;
 	private int studio_row_count;

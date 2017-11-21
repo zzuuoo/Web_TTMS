@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
+
 import bean.Flag;
 import bean.employee;
 import bean.user;
@@ -85,10 +87,13 @@ public class Register extends HttpServlet {
 	      //
 	      }
 	      //回答
-	      JSONObject object = JSONObject.fromObject(result);
-	      	out.write(object.toString());
-	        out.close();
-	        System.out.println(object.toString());
+	  	//反馈情况
+			JsonObject jsobjcet = new JsonObject();
+	        jsobjcet.addProperty("flag", result.getFlag());
+	        
+			out.write(jsobjcet.toString());
+			out.close();
+	        System.out.println(jsobjcet.toString());
 	}
 
 	/**

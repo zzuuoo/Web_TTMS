@@ -1,8 +1,13 @@
 package bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class schedule {
+public class schedule implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2188919427835202313L;
 	private int sched_id;
 	private int studio_id;
 	private int play_id;

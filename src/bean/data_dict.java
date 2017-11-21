@@ -1,6 +1,12 @@
 package bean;
 
-public class data_dict {
+import java.io.Serializable;
+
+public class data_dict implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6085533021699890721L;
 	private int dict_id;
 	private int dict_parent_id;
 	private int dict_index;	

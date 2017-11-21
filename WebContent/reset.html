@@ -17,14 +17,14 @@
     <ul class="reg_ul">
       <li>
           <span>用户名：</span>
-          <input type="text" name="" value="" placeholder="4-8位用户名" class="reg_user" id="nikename">
+          <input type="text" name="" value="" placeholder="4-8位用户名" class="reg_user" id="emp_no">
           <span class="tip user_hint"></span>
       </li>
       <li>
           <span>用户类型：</span>
-          <select class="choosetype">
-            <option value="普通用户">普通用户</option>
-            <option value="管理员">管理员</option> 
+          <select class="choosetype" id = "type">
+            <option value="0">普通用户</option>
+            <option value="1">管理员</option> 
           </select>
       </li>
       <li>
@@ -39,55 +39,22 @@
       </li>
       <li>
           <span>邮箱：</span>
-          <input type="text" name="" value="" placeholder="邮箱" class="reg_email" id="email">
+          <input type="text" name="" value="" placeholder="邮箱" class="reg_email" id="emp_email">
           <span class="tip email_hint"></span>
       </li>
       <li>
           <span>手机号码：</span>
-          <input type="number" name="" value="" placeholder="手机号" class="reg_mobile" id="mobile">
+          <input type="number" name="" value="" placeholder="手机号" class="reg_mobile" id="emp_tel_num">
           <span class="tip mobile_hint"></span>
       </li>
       <li>
-        <button id="register" type="button" name="button" class="red_button" >注册</button>
+        <button type="button" name="button" class="red_button" id="register">注册</button>
+        <button type="button" name="button" class="red_button" onclick="back()">返回</button>
       </li>
     </ul>
   </div>
   <script type="text/javascript" src="./resetjs/jquery.min.js"></script>
   <script type="text/javascript" src="./resetjs/script.js"></script>
-  <script>
-			//验证注册
-      $("#register").click(function() {
-    	  alert('111');
-    	  
-        $.ajax({
-    		type: "POST", //提交方式，也可以是get
-    		url: "http://zuo2017.xin:8080/Web_TTMS/Register",    //请求的url地址
-    		dataType: "json",   //返回格式为json,也可以不添加这个属性，也可以是（xml、json、script 或 html）。
-    		async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-    		//data: { id: value },    //参数值 ,id是定义的要传的参数变量名，后台接收一致，value是页面取的传值的变量名，如果有多个，按照格式每组用逗号隔开，没有参数可以不用
-    		beforeSend: function() {
-    			//请求前的处理，如果没有可以不用写
-    		},
-            data: {
-                emp_no: $("#emp_no").val(),
-                emp_pass: $("#emp_pass").val(),
-                type: $("#type").val(),
-                emp_email: $("#email").val(),
-                emp_tel_num: $("#mobile").val(),
-                emp_name:'测试',
-                emp_addr:'地址',
-                Head_path:'头像路径',
-                
-            },
-            success: function(data){    //    alert后台的返回值
-                alert(data);
-            },
-            error: function(){
-                alert('访问失败');
-            }
-        });
-    });
-		</script>
-  
+  <script src="registerJS/register.js"></script>
 </body>
 </html>

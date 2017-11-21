@@ -5,6 +5,7 @@ header{
 	border-bottom: solid 4px red;
 }
 .member_wrap{
+	float: left;
 	
 }
 .header_item{
@@ -169,9 +170,132 @@ header{
 	color: #999;
 }
 .loginLogo {
-		height: 100px;
-		width: 100px;
-		margin: 40px 0 10px 0;
-		padding: 0;
-		border-radius: 100px;
-	}
+	height: 100px;
+	width: 100px;
+	margin: 40px 0 10px 0;
+	padding: 0;
+	border-radius: 100px;
+}
+	
+/*增加演出厅/人员的表单样式*/
+.position {
+	position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 240px;
+    width: 70%;
+}
+.smart-green {
+	margin-left:auto;
+	margin-right:auto;
+	max-width: 500px;
+	background: #F8F8F8;
+	padding: 30px 30px 20px 30px;
+	font: 12px Arial, Helvetica, sans-serif;
+	color: #666;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.smart-green h1 {
+		font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
+		padding: 20px 0px 20px 40px;
+		display: block;
+		margin: -30px -30px 10px -30px;
+		color: #FFF;
+		background: #9DC45F;
+		text-shadow: 1px 1px 1px #949494;
+		border-radius: 5px 5px 0px 0px;
+		-webkit-border-radius: 5px 5px 0px 0px;
+		-moz-border-radius: 5px 5px 0px 0px;
+		border-bottom:1px solid #89AF4C;
+}
+.smart-green label {
+		display: block;
+		margin: 0px 0px 5px;
+}
+.smart-green input[type="text"], .smart-green input[type="email"], .smart-green textarea, .smart-green select {
+		color: #555;
+		height: 30px;
+		line-height:15px;
+		width: 100%;
+		padding: 0px 0px 0px 10px;
+		margin-top: 2px;
+		border: 1px solid #E5E5E5;
+		background: #FBFBFB;
+		outline: 0;
+		-webkit-box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+		box-shadow: inset 1px 1px 2px rgba(238, 238, 238, 0.2);
+		font: normal 14px/14px Arial, Helvetica, sans-serif;
+}
+.smart-green .button {
+		background-color: #9DC45F;
+		border-radius: 5px;
+		-webkit-border-radius: 5px;
+		-moz-border-border-radius: 5px;
+		border: none;
+		padding: 10px 25px 10px 25px;
+		color: #FFF;
+		text-shadow: 1px 1px 1px #949494;
+		margin-top:30px;
+}
+.smart-green .button:hover {
+	background-color:#80A24A;
+}
+/* 定义修改演出厅模态对话框外面的覆盖层样式 */
+#modal-overlay {
+		visibility: hidden;    
+		position: absolute;   /* 使用绝对定位或固定定位  */
+		left: 0px;    
+		top: 0px;
+		width:100%;
+		height:100%;
+		text-align:center;
+		z-index: 1000;
+		background-color: rgba(24, 24, 24, 0.5);
+}
+/* 模态框样式 */
+.modal-data{
+	width:300px;
+	margin: 100px auto;
+	background-color: #fff;
+	border:1px solid #000;
+	padding:15px;
+	text-align:center;
+}
+/*增加演出厅按钮*/
+.addbutton {
+	margin: auto;
+	color: #000000;
+	background-color: #C0C0C0;
+	font-size: 16px;
+	padding: 10px 60px;
+	outline: inherit;
+	border-radius: 3px;
+	cursor: pointer;
+	margin-top: 10px;
+	margin-left:765px;
+  }
+  #add {
+	visibility: hidden;    
+	position: absolute;   /* 使用绝对定位或固定定位  */
+	left: 0px;    
+	top: 0px;
+	width:100%;
+	height:100%;
+	text-align:center;
+	z-index: 1000;
+	background-color: rgba(24, 24, 24, 0.5);
+}
+/* 模态框样式 */
+.adddata{
+width:300px;
+margin: 100px auto;
+background-color: #fff;
+border:1px solid #000;
+padding:15px;
+text-align:center;
+}

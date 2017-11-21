@@ -1,8 +1,12 @@
 package bean;
 
-import java.awt.HeadlessException;
+import java.io.Serializable;
 
-public class user {
+public class user implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -409495839808480311L;
 	private String emp_no;//用户名，非空
 	private String emp_pass;//密码，非空
 	private int type;//'用户类型：0为普通用户，1是管理员',非空
