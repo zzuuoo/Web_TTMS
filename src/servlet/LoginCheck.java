@@ -51,6 +51,7 @@ public class LoginCheck extends HttpServlet {
 //	      String remeber = request.getParameter("rememberme");
 	      Flag flag = new Flag();
 	      flag.setFlag("no");
+	      String emp_name="游客";
 	      
 	      
 //	      boolean checkOK = false;
@@ -66,19 +67,21 @@ public class LoginCheck extends HttpServlet {
 					us=u;
 				}
 			}
-			List<employee> lemp = new EmployeeSrv().Fetch("emp_no = '"+name+"'");
+			
 			if(flag.getFlag().equals("yes")){
 
-				request.getSession().setAttribute("login", "ok");
-				request.getSession().setAttribute("employee", lemp.get(0));
-				request.getSession().setAttribute("user", us);
+//				request.getSession().setAttribute("login", "ok");
+//				request.getSession().setAttribute("employee", lemp.get(0));
+//				request.getSession().setAttribute("user", us);
 				
-				request.setAttribute("emp_no", name);
-				request.setAttribute("emp_name", lemp.get(0).getEmp_name());
+//				request.setAttribute("emp_no", name);
+//				request.setAttribute("emp_name", lemp.get(0).getEmp_name());
+				List<employee> lemp = new EmployeeSrv().Fetch("emp_no = '"+name+"'");
+				emp_name=lemp.get(0).getEmp_name();
 				if(us.getType()==1) {		
-			            request.getSession().setAttribute("employee", "ok");
+			            request.getSession().setAttribute("employer", "ok");
 				}else {
-		            request.getSession().setAttribute("employer", "ok");
+		            request.getSession().setAttribute("employee", "ok");
 				}
 			}else{
 				 request.getSession().setAttribute("desc", "账号或密码错误");
@@ -87,6 +90,9 @@ public class LoginCheck extends HttpServlet {
 			//反馈情况
 			JsonObject jsobjcet = new JsonObject();
 	        jsobjcet.addProperty("flag", flag.getFlag());
+	        jsobjcet.addProperty("type", us.getType());
+	        jsobjcet.addProperty("emp_no",name);
+	        jsobjcet.addProperty("emp_name",emp_name);
 			out.write(jsobjcet.toString());
 			out.close();		
 	}

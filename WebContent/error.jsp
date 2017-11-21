@@ -23,6 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div>你的网络有问题，或者操作有问题，反正我们没问题。</div>
 <br>
 <div>${desc}</div>
-<div><a href="Login.html">回首页</a></div>
+<div><a href="index.html">回首页</a></div>
 </body>
 </html>

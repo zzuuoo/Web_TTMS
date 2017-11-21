@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aa</title>
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<script>
+
+function init()
+{
+	var emp_name = getCookie("emp_name");
+	var emp_no = getCookie("emp_no");
+	document.getElementById("emp_name").innerText="名字:" + emp_name;
+	document.getElementById("emp_no").innerText="账号:" + emp_no;
+	}
+
+
+function getCookie(c_name)
+{
+if (document.cookie.length>0)
+  {
+  c_start=document.cookie.indexOf(c_name + "=")
+  if (c_start!=-1)
+    { 
+    c_start=c_start + c_name.length+1 
+    c_end=document.cookie.indexOf(";",c_start)
+    if (c_end==-1) c_end=document.cookie.length
+    return unescape(document.cookie.substring(c_start,c_end))
+    } 
+  }
+return ""
+}
+
+</script>
+</head>
+<body onload="init()">
+	<div class="col-md-8">
+		<label style="font-size:25px;color:red">cooket</label><br>
+		<label style="font-size:25px" id="emp_name"></label><br>
+		<label style="font-size:25px" id="emp_no"></label><br>
+		<input type="button" onclick="init()" value="获取k">
+	</div>
+</body>
+</html>
