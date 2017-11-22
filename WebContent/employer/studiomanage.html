@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>影厅 管理</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="stylesheet" href="../layui/layuicss/layui.css" media="all">
+  <link rel="stylesheet" href="../css/common.css">
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+
+   <script>
+  function init()
+  {
+    var head= "<img src=\"../img/login.jpg\" class=\"layui-nav-img\" id = \"head_img\">";
+    //document.getElementById("emp_name").innerHTML=head+getCookie("emp_name");
+    document.getElementById("emp_name").innerHTML=head+'游客';
+  }
+  
+  function getCookie(c_name)
+  {
+  if (document.cookie.length>0)
+    {
+    c_start=document.cookie.indexOf(c_name + "=")
+    if (c_start!=-1)
+      { 
+      c_start=c_start + c_name.length+1 
+      c_end=document.cookie.indexOf(";",c_start)
+      if (c_end==-1) c_end=document.cookie.length
+      return unescape(document.cookie.substring(c_start,c_end))
+      } 
+    }
+  return ""
+  }
+
+  
+  </script>
+</head>
+
+<body onload="init()">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">最接地气票务管理系统</div>
+
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;"  id="emp_name">
+          <img src="../images/鹿鹿.png" class="layui-nav-img">
+          用户名
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="../index.html">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+          <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="main.html">首页</a>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="playmanage.html">影片管理</a>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="schedulemanage.html">演唱计划管理</a>
+        </li>
+        <li class="layui-nav-item">
+          <a class="" href="studiomanage.html">演出厅管理</a>
+         
+        </li>
+        <li class="layui-nav-item">
+          <a href="seatmanage.html">座位管理</a>
+
+        </li>
+        <li class="layui-nav-item">
+          <a href="usermanage.html">用户管理</a>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+
+<table class="layui-table" lay-data="{url:'http://www.zuo2017.xin:8080/Web_TTMS/GetAllStudio', id:'test3'}" lay-filter="test3">
+  <thead>
+    <tr>
+      <th lay-data="{type:'checkbox'}">ID</th>
+      <th lay-data="{field:'studio_id', width:80, sort: true}">ID</th>
+      <th lay-data="{field:'studio_name', width:120, sort: true, edit: 'text'}">名</th>
+      <th lay-data="{field:'studio_col_count', edit: 'text', minWidth: 100}">行</th>
+      <th lay-data="{field:'studio_row_count', edit: 'text', minWidth: 100}">列</th>
+      <th lay-data="{field:'studio_introduction', edit: 'text', minWidth: 150}">介绍</th>
+      <th lay-data="{field:'studio_flag', sort: true, edit: 'text'}">状态</th>
+    </tr>
+  </thead>
+</table>
+<div style="text-align: center;">
+  <button class="layui-btn layui-btn-radius" style="">添加</button>
+   <button class="layui-btn layui-btn-danger layui-btn-radius">删除</button>
+</div>
+ 
+          
+<script src="../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+  
+  //监听单元格编辑
+  table.on('edit(test3)', function(obj){
+    var value = obj.value //得到修改后的值
+    ,data = obj.data //得到所在行所有键值
+    ,field = obj.field; //得到字段
+    layer.msg('[ID: '+ data.studio_id +'] ' + field + ' 字段更改为：'+ value);
+  });
+});
+</script>
+
+    </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    1028298035@qq.com 欢迎反馈
+  </div>
+</div>
+
+<!--<script src="../employJS/edithouse.js"></script>-->
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+
+
+</script>
+</body>
+</html>

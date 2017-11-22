@@ -20,7 +20,7 @@ function delete_confirm() {
 $("#toaddemp").click(function(){
         $.ajax({
           url: "",
-          type: "GET",
+          type: "POST",
           data: {
               addstudio: $("#toaddemp").val()
         },
@@ -35,7 +35,7 @@ $("#toaddemp").click(function(){
   $("#toeditemp").click(function(){
         $.ajax({
           url: "",
-          type: "GET",
+          type: "POST",
           data: {
               editstudio: $("#toemp").val()
         },

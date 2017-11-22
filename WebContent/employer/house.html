@@ -35,6 +35,22 @@
 
   
   </script>
+  <style type="text/css">
+    
+.wrapper {
+            margin-top:3cm;
+            position:relative;
+        }
+        .layui-carousel {
+            margin: 0 auto;
+            position:absolute;/*设定水平和垂直偏移父元素的50%，
+再根据实际长度将子元素上左挪回一半大小*/
+            left:50%;
+            top:50%;
+            margin-left: -500px;
+            margin-top:-100px;
+        }
+  </style>
 </head>
 <body class="layui-layout-body" onload="init()">
 <div class="layui-layout layui-layout-admin">
@@ -57,12 +73,12 @@
       <li class="layui-nav-item"><a href="../index.html">退了</a></li>
     </ul>
   </div>
-  <div class="layui-side layui-bg-black">
+  <div class="layui-side layui-bg-black" style="margin-bottom:10%">
     <div class="layui-side-scroll">
       
-      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
           <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="">首页</a>
+          <a class="" href="house.html">首页</a>
         </li>
          <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="">影片管理</a>
@@ -71,15 +87,15 @@
           <a class="" href="">演唱计划管理</a>
         </li>
         <li class="layui-nav-item">
-          <a class="" href="javascript:;">管理演出厅</a>
+          <a class="" href="studio.html">演出厅管理</a>
          
         </li>
         <li class="layui-nav-item">
-          <a href="seat.html">管理座位</a>
+          <a href="seat.html">座位管理</a>
 
         </li>
         <li class="layui-nav-item">
-          <a href="user.html">管理人员</a>
+          <a href="user.html">用户管理</a>
 
         </li>
       </ul>
@@ -87,120 +103,98 @@
   </div>
   <!--按类别查找框-->
     <!-- 内容主体区域 --> 
-    <div style="margin-left:15%;">
-      <form>
-        <button type="button" class="addbutton" onclick="add()">增加演出厅</button>
-      </form>
-      <table class="layui-table">
-      <thead>
-        <tr>
-          <th>演出厅名称</th>
-          <th>演出厅编号</th>
-          <th>可用座位数量</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>情怀厅</th>
-          <th>01</th>
-          <th>13</th>
-          <th><div class="layui-btn-group">
-    <button class="layui-btn layui-btn-normal layui-btn-radius " onclick="overlay()" id="toeditstudio">修改</button>
-    <button data-method="confirmTrans" class="layui-btn layui-btn-danger layui-btn-radius " onclick="delete_confirm()">删除</button>
-  </div></th>
-        </tr>
-        <tr>
-          <th>文艺厅</th>
-          <th>02</th>
-          <th>5</th>
-          <th><div class="layui-btn-group">
-    <button class="layui-btn layui-btn-normal layui-btn-radius" onclick="overlay()" id="toeditstudio">修改</button>
-    <button class="layui-btn layui-btn-danger layui-btn-radius" onclick="delete_confirm()">删除</button>
-  </div></th>
-        </tr>
-        <tr>
-          <th>独家放送厅</th>
-          <th>03</th>
-          <th>10</th>
-          <th><div class="layui-btn-group">
-    
-    <button class="layui-btn layui-btn-normal layui-btn-radius " onclick="overlay()" id="toeditstudio">修改</button>
-    <button class="layui-btn layui-btn-danger layui-btn-radius" onclick="delete_confirm()">删除</button>
-  </div></th>
-        </tr>
-        <tr>
-          <th>温馨家庭厅</th>
-          <th>04</th>
-          <th>11</th>
-          <th><div class="layui-btn-group">
-   
-    <button class="layui-btn layui-btn-normal layui-btn-radius " onclick="overlay()" id="toeditstudio">修改</button>
-    <button class="layui-btn layui-btn-danger layui-btn-radius" onclick="delete_confirm()">删除</button>
-  </div></th>
-        </tr>
-        <tr>
-          <th>激光巨慕厅</th>
-          <th>05</th>
-          <th>14</th>
-          <th><div class="layui-btn-group">
-    
-    <button class="layui-btn layui-btn-normal layui-btn-radius " onclick="overlay()" id="toeditstudio">修改</button>
-    <button class="layui-btn layui-btn-danger layui-btn-radius" onclick="delete_confirm()">删除</button>
-  </div></th>
-        </tr>
-        <tr>
-          <th>IMAX影厅</th>
-          <th>06</th>
-          <th>1</th>
-          <th><div class="layui-btn-group">
-    <button class="layui-btn layui-btn-normal layui-btn-radius " onclick="overlay()" id="toeditstudio">修改</button>
-    <button class="layui-btn layui-btn-danger layui-btn-radius" onclick="delete_confirm()">删除</button>
-  </div></th>
-        </tr>
-      </tbody> 
-    </table>
+
+<div style="margin-left:17%;">
+
+    <div class="wrapper">
+       <div class="layui-carousel" id="test1" lay-filter="test1">
+        <div carousel-item="" style="text-align:center">
+           <div><img src="../img/a.jpg"></div>
+          <div><img src="../img/b.jpg"></div>
+          <div><img src="../img/c.jpg"></div>
+          <div><img src="../img/d.jpg"></div>
+          <div><img src="../img/e.jpg"></div>
+        </div>
+      </div> 
+ 
     </div>
   </div>
-  <!--增加演出厅-->
-  <div id="add"> 
-      <form  class="position smart-green " class="add-data">
-      <h1>增加演出厅</h1>
-      <label for="演出厅名称">请输入演出厅名称</label>
-      <input type="text"/>
-      <br/>
-      <label for="演出厅编号">请输入演出厅编号</label>
-      <input type="text" />
-      <br/>
-      <button type="button" class="button" onclick="add()" id="toaddstudio">提交</button>
-      <button type="button" class="button" onclick="add()">返回</button>
-      </form>
-      </div>
-  <!--修改演出厅-->
-  <div id="modal-overlay"> 
-  <form  class="position smart-green " class="modal-data">
-  <h1>修改演出厅</h1>
-  <label for="演出厅名称">请输入演出厅名称</label>
-  <input type="text"/>
-  <br/>
-  <label for="演出厅编号">请输入演出厅编号</label>
-  <input type="text" />
-  <br/>
-  <button type="button" class="button" onclick="overlay()" id="toeditstudio">提交</button>
-  <button type="button" class="button" onclick="overlay()">返回</button>
-  </form>
-  </div>
+
+
+
+
+
+
   <div class="layui-footer">
     <!-- 底部固定区域 -->
     © 最接地气小组@软件1501
   </div>
 
-<script src="../layui/layui.js"></script>
+<script src="../layui/layui.js" charset="utf-8"></script>
 <script>
 layui.use('element', function(){
   var element = layui.element;
 });
 </script>
-<script src="../employJS/edithouse.js"></script>
+<script>
+layui.use(['carousel', 'form'], function(){
+  var carousel = layui.carousel
+  ,form = layui.form;
+  
+  //常规轮播
+  carousel.render({
+    elem: '#test1'
+    ,arrow: 'always'
+  });
+  
+  
+  //设定各种参数
+  var ins3 = carousel.render({
+    elem: '#test1'
+  });
+  //图片轮播
+  carousel.render({
+    elem: '#test1'
+    ,width: '1000px'
+    ,height: '440px'
+    ,interval: 5000
+  });
+  
+
+  var $ = layui.$, active = {
+    set: function(othis){
+      var THIS = 'layui-bg-normal'
+      ,key = othis.data('key')
+      ,options = {};
+      
+      othis.css('background-color', '#5FB878').siblings().removeAttr('style'); 
+      options[key] = othis.data('value');
+      ins3.reload(options);
+    }
+  };
+  
+  //监听开关
+  form.on('switch(autoplay)', function(){
+    ins3.reload({
+      autoplay: this.checked
+    });
+  });
+  
+  $('.demoSet').on('keyup', function(){
+    var value = this.value
+    ,options = {};
+    if(!/^\d+$/.test(value)) return;
+    
+    options[this.name] = value;
+    ins3.reload(options);
+  });
+  
+  //其它示例
+  $('.demoTest .layui-btn').on('click', function(){
+    var othis = $(this), type = othis.data('type');
+    active[type] ? active[type].call(this, othis) : '';
+  });
+});
+</script>
 </body>
 </html>

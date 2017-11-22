@@ -40,9 +40,10 @@ public class GetAllSeat extends HttpServlet {
 		//把信息转换为json类型
 		JSONArray jsonArr = JSONArray.fromObject(lSeats);
 		//回答
+		String h="{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":";
+		response.setContentType("json");
         PrintWriter out = response.getWriter();
-        out.write(jsonArr.toString());
-        System.out.println(jsonArr.toString());
+        out.write(h+jsonArr.toString()+"}");
         out.close();
 	}
 

@@ -59,9 +59,17 @@ public class GetAllStudio extends HttpServlet {
 //        //这句话的意思，使得放入流的数据是gb2312格式  //经测试，有用
 //        ps.write(jsonArr.toString().getBytes("gb2312"));  
 //		ps.close();
-		//回答
+		//回答response: {
+//		  statusName: 'status' //数据状态的字段名称，默认：code
+//			  ,statusCode: 200 //成功的状态码，默认：0
+//			  ,msgName: 'hint' //状态信息的字段名称，默认：msg
+//			  ,countName: 'total' //数据总数的字段名称，默认：count
+//			  ,dataName: 'rows' //数据列表的字段名称，默认：data
+//			}  
+		String h="{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":";
+		response.setContentType("json");
         PrintWriter out = response.getWriter();
-        out.write(jsonArr.toString());
+        out.write(h+jsonArr.toString()+"}");
         System.out.println(jsonArr.toString());
         out.close();
 	}

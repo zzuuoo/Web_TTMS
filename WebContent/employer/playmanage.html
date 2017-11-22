@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>layout 后台大布局 - Layui</title>
+<link rel="stylesheet" href="../css/layui.css">
+ <script>
+  function init()
+  {
+    var head= "<img src=\"../img/login.jpg\" class=\"layui-nav-img\" id = \"head_img\">";
+    //document.getElementById("emp_name").innerHTML=head+getCookie("emp_name");
+    document.getElementById("emp_name").innerHTML=head+'游客';
+  }
+  
+  function getCookie(c_name)
+  {
+  if (document.cookie.length>0)
+    {
+    c_start=document.cookie.indexOf(c_name + "=")
+    if (c_start!=-1)
+      { 
+      c_start=c_start + c_name.length+1 
+      c_end=document.cookie.indexOf(";",c_start)
+      if (c_end==-1) c_end=document.cookie.length
+      return unescape(document.cookie.substring(c_start,c_end))
+      } 
+    }
+  return ""
+  }
+
+  
+  </script>
+</head>
+
+<body onload="init()">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">最接地气的票务管理系统</div>
+
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;" id="emp_name">
+          <img src="../images/鹿鹿.png" class="layui-nav-img">
+          用户名
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="Login.html">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+           <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+          <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="main.html">首页</a>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="playmanage.html">影片管理</a>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="schedulemanage.html">演唱计划管理</a>
+        </li>
+        <li class="layui-nav-item">
+          <a class="" href="studiomanage.html">演出厅管理</a>
+         
+        </li>
+        <li class="layui-nav-item">
+          <a href="seatmanage.html">座位管理</a>
+
+        </li>
+        <li class="layui-nav-item">
+          <a href="usermanage.html">用户管理</a>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">play</div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    1028298035@qq.com 欢迎反馈
+  </div>
+</div>
+<script src="../layui/layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+
+
+</script>
+</body>
+</html>

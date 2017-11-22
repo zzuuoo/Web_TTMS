@@ -20,7 +20,8 @@ function delete_confirm() {
   $("#toaddstudio").click(function(){
     $.ajax({
     url: "",
-    type: "GET",
+    dataType:'json',
+    type: "POST",
     data: {
         addstudio: $("#toaddstudio").val()
   },
@@ -35,7 +36,8 @@ function delete_confirm() {
 $("#toeditstudio").click(function(){
     $.ajax({
     url: "",
-    type: "GET",
+    dataType:'json',
+    type: "POST",
     data: {
         editstudio: $("#toeditstudio").val()
   },
@@ -49,13 +51,15 @@ $("#toeditstudio").click(function(){
 });
 
 $.ajax({
-url: "http://www.zuo2017.xin:8080/Web_TTMS/GetAllEmployee",
-type: "GET",
-success: function (data) {    //    alert后台返回的参数
-alert(data);
-},
-error: function (err) {
-console.log('访问失败');
-console.log(err);
-}
+    url: "http://www.zuo2017.xin:8080/Web_TTMS/GetAllEmployee",
+    type: "POST",
+    dataType:'json',
+
+  success: function (data) {    //    alert后台返回的参数
+  alert(data);
+  },
+  error: function (err) {
+  console.log('访问失败');
+  console.log(err);
+  }
 });

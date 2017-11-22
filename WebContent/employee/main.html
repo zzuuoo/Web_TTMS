@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>layout 后台大布局 - Layui</title>
+<link rel="stylesheet" href="../css/layui.css">
+
+  </script>
+    <style type="text/css">
+    
+.wrapper {
+            margin-top:3cm;
+            position:relative;
+        }
+        .layui-carousel {
+            margin: 0 auto;
+            position:absolute;/*设定水平和垂直偏移父元素的50%，
+再根据实际长度将子元素上左挪回一半大小*/
+            left:50%;
+            top:50%;
+            margin-left: -500px;
+            margin-top:-100px;
+        }
+  </style>
+
+  <script>
+  function init()
+  {
+    var head= "<img src=\"../img/login.jpg\" class=\"layui-nav-img\" id = \"head_img\">";
+    //document.getElementById("emp_name").innerHTML=head+getCookie("emp_name");
+    document.getElementById("emp_name").innerHTML=head+'游客';
+  }
+  
+  function getCookie(c_name)
+  {
+  if (document.cookie.length>0)
+    {
+    c_start=document.cookie.indexOf(c_name + "=")
+    if (c_start!=-1)
+      { 
+      c_start=c_start + c_name.length+1 
+      c_end=document.cookie.indexOf(";",c_start)
+      if (c_end==-1) c_end=document.cookie.length
+      return unescape(document.cookie.substring(c_start,c_end))
+      } 
+    }
+  return ""
+  }
+
+  
+  </script>
+
+</head>
+
+<body onload="init()">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">最接地气的票务管理系统</div>
+
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;" id="emp_name">
+          <img src="../images/鹿鹿.png" class="layui-nav-img">
+          用户名
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="../index.html">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+           <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+          <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="main.html">首页</a>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="playmanage.html">影片管理</a>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="schedulemanage.html">演唱计划管理</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+ <!-- 填 -->
+
+         <div class="wrapper">
+       <div class="layui-carousel" id="test1" lay-filter="test1">
+        <div carousel-item="" style="text-align:center">
+           <div><img src="../img/a.jpg"></div>
+          <div><img src="../img/b.jpg"></div>
+          <div><img src="../img/c.jpg"></div>
+          <div><img src="../img/d.jpg"></div>
+          <div><img src="../img/e.jpg"></div>
+        </div>
+      </div> 
+ 
+    </div>
+
+
+
+    </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    1028298035@qq.com 欢迎反馈
+  </div>
+</div>
+<script src="../layui/layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+
+
+</script>
+
+<script>
+layui.use('element', function(){
+  var element = layui.element;
+});
+</script>
+<script>
+layui.use(['carousel', 'form'], function(){
+  var carousel = layui.carousel
+  ,form = layui.form;
+  
+  //常规轮播
+  carousel.render({
+    elem: '#test1'
+    ,arrow: 'always'
+  });
+  
+  
+  //设定各种参数
+  var ins3 = carousel.render({
+    elem: '#test1'
+  });
+  //图片轮播
+  carousel.render({
+    elem: '#test1'
+    ,width: '1000px'
+    ,height: '440px'
+    ,interval: 5000
+  });
+  
+
+  var $ = layui.$, active = {
+    set: function(othis){
+      var THIS = 'layui-bg-normal'
+      ,key = othis.data('key')
+      ,options = {};
+      
+      othis.css('background-color', '#5FB878').siblings().removeAttr('style'); 
+      options[key] = othis.data('value');
+      ins3.reload(options);
+    }
+  };
+  
+  //监听开关
+  form.on('switch(autoplay)', function(){
+    ins3.reload({
+      autoplay: this.checked
+    });
+  });
+  
+  $('.demoSet').on('keyup', function(){
+    var value = this.value
+    ,options = {};
+    if(!/^\d+$/.test(value)) return;
+    
+    options[this.name] = value;
+    ins3.reload(options);
+  });
+  
+  //其它示例
+  $('.demoTest .layui-btn').on('click', function(){
+    var othis = $(this), type = othis.data('type');
+    active[type] ? active[type].call(this, othis) : '';
+  });
+});
+</script>
+</body>
+</html>
