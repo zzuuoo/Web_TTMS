@@ -20,14 +20,13 @@ $("#userLogin").click(function(){
             
             if(data.flag=='yes'){
 //            	window.location.href = './house.html';
-            	document.cookie = 'emp_no' + "=" + data.emp_no + "; "
-            	document.cookie = 'emp_name' + "=" + data.emp_name + "; "
+            	alert(document.cookie);
             	if(data.type==1){
             		//管理员文件夹
-            		window.location.href = './employer/t.html';
+            		window.location.href = './employer/house.html';
             	}else{
             		//普通用户文件夹
-            		window.location.href = './employee/t.html';
+            		window.location.href = './employee/house.html';
             		
             	}
             	

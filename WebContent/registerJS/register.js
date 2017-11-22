@@ -1,7 +1,7 @@
     //返回登录页面
     function back () {
 //    	consloe.
-//        window.location.href = 'index.html';
+       window.location.href = 'index.html';
         }
     //验证注册
     $("#register").click(function() {
@@ -11,7 +11,7 @@
             dataType: 'json',
             data: {
                 emp_no: $("#emp_no").val(),
-                password: $("#emp_pass").val(),
+                emp_pass: $("#emp_pass").val(),
                 type: $("#type").val(),
                 emp_email: $("#emp_email").val(),
                 emp_tel_num: $("#emp_tel_num").val(),

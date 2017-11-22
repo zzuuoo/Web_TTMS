@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,6 +53,7 @@ public class LoginCheck extends HttpServlet {
 	      Flag flag = new Flag();
 	      flag.setFlag("no");
 	      String emp_name="游客";
+	      int type=0;
 	      
 	      
 //	      boolean checkOK = false;
@@ -69,6 +71,26 @@ public class LoginCheck extends HttpServlet {
 			}
 			
 			if(flag.getFlag().equals("yes")){
+				List<employee> lemp = new EmployeeSrv().Fetch("emp_no = '"+name+"'");
+				 //1. 现在服务器端创建一个cookie  
+				emp_name=lemp.get(0).getEmp_name();
+	            Cookie emp_no1=new Cookie("emp_no",name);  
+	            Cookie emp_name1=new Cookie("emp_name",emp_name);  
+	            Cookie head_type=new Cookie("Head_type",us.getHead_path()); 
+	            Cookie emp_pass=new Cookie("emp_pass",us.getEmp_pass()); 
+	            Cookie emp_addr = new Cookie("emp_addr", lemp.get(0).getEmp_addr());
+	            Cookie emp_email =new Cookie("emp_email",lemp.get(0).getEmp_email());
+	            Cookie emp_tel_num  = new Cookie("emp_tel_num", lemp.get(0).getEmp_tel_num());
+	              
+	            //3. 将该cookie写回到客户端  
+	            response.addCookie(emp_no1);  
+	            response.addCookie(emp_name1);
+	            response.addCookie(head_type);
+	            response.addCookie(emp_pass);
+	            response.addCookie(emp_addr);
+	            response.addCookie(emp_email);
+	            response.addCookie(emp_tel_num);
+	            
 
 //				request.getSession().setAttribute("login", "ok");
 //				request.getSession().setAttribute("employee", lemp.get(0));
@@ -76,23 +98,25 @@ public class LoginCheck extends HttpServlet {
 				
 //				request.setAttribute("emp_no", name);
 //				request.setAttribute("emp_name", lemp.get(0).getEmp_name());
-				List<employee> lemp = new EmployeeSrv().Fetch("emp_no = '"+name+"'");
-				emp_name=lemp.get(0).getEmp_name();
+				
 				if(us.getType()==1) {		
 			            request.getSession().setAttribute("employer", "ok");
 				}else {
 		            request.getSession().setAttribute("employee", "ok");
 				}
+				
+				type=us.getType();
+				
 			}else{
 				 request.getSession().setAttribute("desc", "账号或密码错误");
 			}
 			
+
+			
 			//反馈情况
 			JsonObject jsobjcet = new JsonObject();
 	        jsobjcet.addProperty("flag", flag.getFlag());
-	        jsobjcet.addProperty("type", us.getType());
-	        jsobjcet.addProperty("emp_no",name);
-	        jsobjcet.addProperty("emp_name",emp_name);
+	        jsobjcet.addProperty("type", type);
 			out.write(jsobjcet.toString());
 			out.close();		
 	}

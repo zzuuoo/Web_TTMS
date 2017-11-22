@@ -56,11 +56,12 @@ public class Register extends HttpServlet {
 	      int type = new Integer(request.getParameter("type"));      
 	      String emp_pass = request.getParameter("emp_pass");
 	      String Head_path = request.getParameter("Head_path");
+	      System.out.println(emp_name+":"+emp_pass);
 	      
 	      EmployeeSrv eSrv = new EmployeeSrv();
 	      
 	      //检查该账号是否已被注册，否则注册
-	      if(eSrv.Fetch(" emp_no = '"+ emp_no+"'")!=null) {
+	      if(eSrv.Fetch(" emp_no = '"+ emp_no+"'")!=null&&!emp_pass.equals("")) {
 	      
 	      //插入employee数据
 	      employee e = new employee();
