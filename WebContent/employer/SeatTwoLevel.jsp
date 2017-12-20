@@ -52,7 +52,7 @@
 .icon-delete-little {
 	height: 50px;
 	width: 50px;
-	background-image: url("../img/b.jpg");
+	background-image: url("SH.png");
 	background-size: 50px,50px;
 	margin-left: 10px;
 	float: left;
@@ -60,10 +60,12 @@
 	margin-top: 10px;
 }
 .zuowei{
+	margin-top: 500px;
 	width:<%=60*col%>px;
 	height:<%=60*row%>px;
 	margin: 0 auto;
 }
+
 </style>
 <script>
 	function init() {
@@ -122,7 +124,7 @@
 					<li class="layui-nav-item"><a class=""
 						href="studiomanage.html">演出厅管理</a></li>
 					<li class="layui-nav-item"><a
-						href="/web_ttmsSeat/SeatManageServlet?mothed=searchByPage&currentPage=1">座位管理</a>
+						href="/Web_TTMS/SeatManageServlet?mothed=searchByPage&currentPage=1">座位管理</a>
 
 					</li>
 					<li class="layui-nav-item"><a href="usermanage.html">用户管理</a>
@@ -192,24 +194,14 @@
 				</div>
 
 				<div class="col-md-10">
-					<ol class="clearfix ol">
-						<li><div class="icon-seat-s">可用</div></li>
-						<li><div class="icon-delete-little">
-								损坏
-								</di></li>
-						<li><div class="icon-seat-k">空缺</div></li>
-					</ol>
-					<ol>
-						<!--  	<li><input type="button" name="" value="保存" onclick="javascript:location.href='People?method=update'"></li> -->
-						<li><input type="button" name="" value="保存"
-							onclick="status()"></li>
-					</ol>
-				</div>
-
+						<div class="icon-seat-s"></div><div style="float:left;line-height: 70px;">可用</div>
+						<div class="icon-delete-little"></div><div style="float:left;line-height: 70px;">损坏</div>
+						<div class="icon-seat-k"></div><div style="float:left;line-height: 70px;">空缺</div>
+				</div><br/>
+			<!--<input type="button" name="" value="保存" onclick="status()">-->
+			 <button class="btn btn-large btn-primary" type="button" onclick="status()">保存</button>
 			</div>
 		</div>
-
-
 
 		<div class="layui-footer">
 			<!-- 底部固定区域 -->
@@ -266,7 +258,7 @@
 			//console.log(obj);
 					$.ajax({
 						type : "post",
-						url : "/web_ttmsSeat/SeatManageServlet?mothed=updata",
+						url : "/Web_TTMS/SeatManageServlet?mothed=updata",
 						data : {
 							ids : idString,
 							status : statuString,
@@ -274,7 +266,7 @@
 						},
 						success : function(data, status) {
 							alert(data);
-							window.location.href = "/web_ttmsSeat/SeatManageServlet?mothed=searchByPage&currentPage=1";
+							window.location.href = "/Web_TTMS/SeatManageServlet?mothed=searchByPage&currentPage=1";
 						},
 						error : function(data, status) {
 							alert("修改失败");

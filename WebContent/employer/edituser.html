@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>usertable</title>
+<script type="text/javascript">
+	function init() {
+		document.getElementById("emp_no").value=window.user.emp_no;
+		document.getElementById("emp_pass").value=window.user.emp_pass;
+		document.getElementById("emp_type").value=window.user.type;
+		document.getElementById("head_path").value=window.user.head_path;
+	}
+
+</script>
+</head>
+<body onload="init()">
+	 <div id="edit"> 
+      <form   action="../UserServlet?method=edit" method="post" enctype="multipart/form-data" name = "myform">
+      <h1>修改用户</h1>
+      <label for="账号">请选择用户账号</label>
+      <select id="emp_no" name="emp_no">
+      </select>
+      <label for="密码" >请输入用户密码</label>
+      <input type="text" name="emp_pass" id = "emp_pass"/>
+      <br/>
+      <br/>
+      请选择用户类型：
+      <input type="radio" name="type" value="管理员"  checked="true" id="type">管理员
+      <input type="radio" name="type" value="普通用户" id="type">普通用户
+      <br/>   
+      头像:<input type="file" name="head_image" id="head_path">
+      <button type="submit" class="button"  id="toadduser" onclick=" return checkFrom()">提交</button>
+      <button type="button" class="button" id="back">返回</button>
+
+
+      </form>
+      </div>
+</body>
+</html>

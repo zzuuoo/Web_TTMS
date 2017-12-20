@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import bean.seat;
@@ -74,32 +74,25 @@ public class SeatDAO implements iSeatDAO {
 		return 0;
 	}
 
-	
-	public int update(seat stu) {
-		int rtn = 1;
+	public int updateSeatStatus(seat stu) {
+		
 		ConnectionManager cManager = ConnectionManager.getInstance();
 		Connection connection =  cManager.getConnection();
 		PreparedStatement pstmt = null;
 		try {
-			String sql = "update seat set " + " studio_id ="
-					+ stu.getStudio_id() + ", " + " seat_row = "
-					+ stu.getSeat_row() + ", "  + " seat_column = "
-					+ stu.getSeat_column() + " ";
-
-			sql += " where sched_id = " + stu.getSeat_id();
-			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			String sql = "UPDATE seat SET seat_status=? WHERE seat_id=? AND studio_id=?";
+			pstmt = connection.prepareStatement(sql);
+			pstmt.setInt(1, stu.getSeat_status());
+			pstmt.setInt(2, stu.getSeat_id());
+			pstmt.setInt(3, stu.getStudio_id());
 			pstmt.executeUpdate();
-			ResultSet rst = pstmt.getGeneratedKeys();	
-			
-			return 1;
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			ConnectionManager.close(null, pstmt, connection);
 
 		}
-		return 0;
+		return 1;
 	}
 
 	 
@@ -151,7 +144,7 @@ public class SeatDAO implements iSeatDAO {
 	 
 	public List<seat> select(String condt) {
 		List<seat> stuList = null;
-		stuList = new LinkedList<seat>();
+		stuList = new ArrayList<seat>();
 		ConnectionManager cManager = ConnectionManager.getInstance();
 			Connection connection=null;
 			connection =  cManager.getConnection();
@@ -172,6 +165,7 @@ public class SeatDAO implements iSeatDAO {
 					stu.setStudio_id(rst.getInt("studio_id"));
 					stu.setSeat_row(rst.getInt("seat_row"));
 					stu.setSeat_column(rst.getInt("seat_column"));
+					stu.setSeat_status(rst.getInt("seat_status"));
 					stuList.add(stu);
 				}
 			}
@@ -183,6 +177,12 @@ public class SeatDAO implements iSeatDAO {
 		}
 
 		return stuList;
+	}
+
+	@Override
+	public int update(seat stu) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

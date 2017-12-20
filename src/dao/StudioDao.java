@@ -3,11 +3,12 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import bean.employee;
 import bean.studio;
 import idao.iStudioDAO;
 import tomcatDb.ConnectionManager;
@@ -151,7 +152,7 @@ public class StudioDao implements iStudioDAO{
 	public List<studio> selectAll() {
 		List<studio> studios = null;
 		studio s;
-		studios=new LinkedList<studio>();
+		studios=new ArrayList<studio>();
 		ConnectionManager cManager = ConnectionManager.getInstance();
 			Connection connection=null;
 			connection =  cManager.getConnection();
@@ -161,7 +162,6 @@ public class StudioDao implements iStudioDAO{
 
   		//用线程池	
   			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstmt.executeQuery(sql);
 			ResultSet rst = pstmt.executeQuery(sql);
 			
   			if (rst!=null) {
@@ -177,9 +177,6 @@ public class StudioDao implements iStudioDAO{
   						
   				}
   			}
-
-  			
-  			
   		} catch (Exception a) {
   			a.printStackTrace();
   		}finally {
@@ -217,12 +214,8 @@ public class StudioDao implements iStudioDAO{
   						s.setStudio_introduction(rst.getString("studio_introduction"));
   						s.setStudio_flag(rst.getInt("studio_flag"));
   						studios.add(s);
-  						
   				}
-  			}
-
-  			
-  			
+  			}	
   		} catch (Exception a) {
   			a.printStackTrace();
   		}finally {
@@ -237,8 +230,8 @@ public class StudioDao implements iStudioDAO{
 		studio s;
 		studios=new LinkedList<studio>();
 		ConnectionManager cManager = ConnectionManager.getInstance();
-			Connection connection=null;
-			connection =  cManager.getConnection();
+		Connection connection=null;
+		connection =  cManager.getConnection();
 		PreparedStatement pstmt = null;
   		try {
   			String sql = "select * from studio	where ";
@@ -272,6 +265,43 @@ public class StudioDao implements iStudioDAO{
 		}
   			
   		return studios.get(0);
+	}
+	
+	public List<studio> PagingQuery(int pag) throws SQLException {
+		System.out.println("pagestudio");
+		List<studio> list1 = selectAll();
+		allCount=list1.size();
+		System.out.println(allCount);
+		allPageCount=(allCount+PAGE_SIZE-1)/PAGE_SIZE;
+		currentPage=pag;
+		if(allPageCount>0&&currentPage>allPageCount) {
+			currentPage=allPageCount;
+		}
+		ConnectionManager cManager = ConnectionManager.getInstance();
+		Connection connection=null;
+		connection =  cManager.getConnection();
+		String sql="select * from studio limit ?,?";
+		PreparedStatement ps = connection.prepareStatement(sql);
+		ps.setInt(1,PAGE_SIZE*(currentPage-1));
+		ps.setInt(2, PAGE_SIZE);
+		ResultSet rs = ps.executeQuery();
+		List<studio> studios = new ArrayList<studio>();
+		studio s;
+		if (rs!=null) {
+				while(rs.next()){
+						s = new studio();
+						s.setStudio_name(rs.getString("studio_name"));
+						s.setStudio_id(rs.getInt("studio_id"));
+						s.setStudio_col_count(rs.getInt("studio_col_count"));
+						s.setStudio_row_count(rs.getInt("studio_row_count"));
+						s.setStudio_introduction(rs.getString("studio_introduction"));
+						s.setStudio_flag(rs.getInt("studio_flag"));
+						studios.add(s);
+				}
+			}
+//		List<Studio> list = run.query(conn, sql,new BeanListHandler<Studio>(Studio.class),PAGE_SIZE*(currentPage-1),PAGE_SIZE);
+		cManager.close(rs, ps, connection);
+		return studios;
 	}
 
 }

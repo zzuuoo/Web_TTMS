@@ -56,7 +56,7 @@
          
         </li>
         <li class="layui-nav-item">
-          <a href="seatmanage.html">座位管理</a>
+          <a href="../SeatManageServlet?mothed=searchByPage&currentPage=1">座位管理</a>
 
         </li>
         <li class="layui-nav-item">
@@ -104,7 +104,7 @@
       <input type="radio" name="type" value="管理员"  checked="true" id="type">管理员
       <input type="radio" name="type" value="普通用户" id="type">普通用户
       <br/>   
-      头像:<input type="file" name="head_image" id="head_path">
+      头像(不得大于2M):<input type="file" name="head_image" id="head_path">
       <button type="submit" class="button"  id="toadduser" onclick=" return checkFrom()">提交</button>
       <button type="button" class="button" id="back">返回</button>
 
@@ -173,7 +173,36 @@ layui.use('table', function(){
 
       });
     } else if(obj.event === 'edit1'){
-      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+      layer.alert('编辑行：<br>'+ JSON.stringify(data));
+
+      // layer.open({
+      //   type: 1,
+      //   title: false,
+      //   closeBtn: 0,
+      //   shadeClose: true,
+      //   skin: 'yourclass',
+      //  content: '自定义HTML内容'
+      // });
+      // window.user={
+      //   emp_no:data.emp_no,
+      //   emp_pass:data.emp_pass,
+      //   type:data.type,
+      //   head_path:data.head_path
+      // }
+      // //获得窗口的垂直位置 
+      //      var iTop = (window.screen.availHeight - 30 - iHeight) / 2; 
+      //      //获得窗口的水平位置 
+      //      var iLeft = (window.screen.availWidth - 10 - iWidth) / 2; 
+      //       var win = window.open ("../edituser.html", "newwindow"," width=400, height=400,resizable=no"+",top=" + iTop + ',left=' + iLeft );
+
+      //   win.user=user;
+
+
+      //同步更新缓存对应的值
+    // obj.update({
+    //   username: '123'
+    //   ,title: 'xxx'
+    // });
     }
   });
   

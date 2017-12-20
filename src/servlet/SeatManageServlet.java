@@ -25,6 +25,7 @@ public class SeatManageServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 这样写避免空指针异常
+		System.out.println("进来了");
 		String mothed = request.getParameter("mothed") != null ? request.getParameter("mothed") : "";
 		try {
 			if (mothed.equals("searchByPage")) {
@@ -50,8 +51,7 @@ public class SeatManageServlet extends HttpServlet {
 			currentPage = Integer.parseInt(strpage) < 1 ? 1 : Integer.parseInt(strpage); // 将字符串转换成整型
 		}
 		StudioDao studioDao = new StudioDao();
-//		List<studio> studios = studioDao.PagingQuery(currentPage);
-		List<studio> studios = studioDao.selectAll();
+		List<studio> studios = studioDao.PagingQuery(currentPage);
 		
 		request.getSession().setAttribute("allCount", studioDao.getAllCount());
 		request.getSession().setAttribute("allPageCount", studioDao.getAllPageCount());
@@ -65,8 +65,7 @@ public class SeatManageServlet extends HttpServlet {
 			throws SQLException, ServletException, IOException {
 		int studioId = Integer.parseInt(request.getParameter("id"));
 		SeatDAO seatDao = new SeatDAO();
-//		List<seat> Seatlist = seatDao.selectAllByStudioId(studioId);
-		List<seat> Seatlist = seatDao.select("");
+		List<seat> Seatlist = seatDao.select(" studio_id = "+studioId);
 		StudioDao studioDao = new StudioDao();	
 		List<studio> stul = studioDao.selectwhat("studio_id = "+studioId);
 		HttpSession session = request.getSession();
@@ -81,7 +80,7 @@ public class SeatManageServlet extends HttpServlet {
 	// 接收前端传来的ajax内容
 	private void updata(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
-		System.out.println("来了");
+		response.setContentType("text/html;charset=utf-8");
 		String ids = request.getParameter("ids");
 		String status = request.getParameter("status");
 		int studio_id =Integer.parseInt(request.getParameter("studio_id")) ;
@@ -101,7 +100,7 @@ public class SeatManageServlet extends HttpServlet {
 				s.setStudio_id(studio_id);
 				SeatDAO seatDao = new SeatDAO();
 				System.out.println(status.toString());
-				seatDao.update(s);
+				seatDao.updateSeatStatus(s);
 			}
 		}
 		PrintWriter writer = response.getWriter();

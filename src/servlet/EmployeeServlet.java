@@ -20,7 +20,7 @@ import net.sf.json.JSONObject;
 /**
  * Servlet implementation class EmplloyeeServlet
  */
-@WebServlet("/EmplloyeeServlet")
+@WebServlet("/EmployeeServlet")
 public class EmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -100,17 +100,20 @@ public class EmployeeServlet extends HttpServlet {
 	    private void delete(HttpServletRequest request, HttpServletResponse response)
 	    {
 	        int result = 0;
+	        System.out.println("进了deleteemployee");
 	        int emp_id = Integer.parseInt(request.getParameter("emp_id"));
 	        if (emp_id > 0)
 	        {
 	            iEmployeeDAO dao =  DAOFactory.createEmployeeDAO();
 	            result = dao.delete(emp_id);
 	            if (result==1)
-	                request.setAttribute("result", "删除成功!");
+//	                request.setAttribute("result", "删除成功!");
+	            	System.out.println("删除成功");
 	            else
-	                request.setAttribute("result", "删除失败!");
+//	                request.setAttribute("result", "删除失败!");
+	            	System.out.println("删除失败");
 	            // 不分页时删除调用全查
-	            search(request, response);
+//	            search(request, response);
 	            // 分页时删除调用分页全查:使用分页index1.jsp时，把这里注释打开
 	            // searchByPage(request, response);
 	        }
