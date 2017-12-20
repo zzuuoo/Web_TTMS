@@ -6,33 +6,7 @@
 <title>layout 后台大布局 - Layui</title>
   <link rel="stylesheet" href="../layui/layuicss/layui.css">
   <link rel="stylesheet" href="../css/common.css">
-
-   <script>
-  function init()
-  {
-    var head= "<img src=\"../img/login.jpg\" class=\"layui-nav-img\" id = \"head_img\">";
-    //document.getElementById("emp_name").innerHTML=head+getCookie("emp_name");
-    document.getElementById("emp_name").innerHTML=head+'游客';
-  }
-  
-  function getCookie(c_name)
-  {
-  if (document.cookie.length>0)
-    {
-    c_start=document.cookie.indexOf(c_name + "=")
-    if (c_start!=-1)
-      { 
-      c_start=c_start + c_name.length+1 
-      c_end=document.cookie.indexOf(";",c_start)
-      if (c_end==-1) c_end=document.cookie.length
-      return unescape(document.cookie.substring(c_start,c_end))
-      } 
-    }
-  return ""
-  }
-
-  
-  </script>
+ <script src="../initJS/init.js"></script>
 </head>
 
 <body onload="init()">
@@ -47,11 +21,11 @@
           用户名
         </a>
         <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
+          <dd><a href="test.html">基本资料</a></dd>
           <dd><a href="">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="../index.html">退出</a></li>
+      <li class="layui-nav-item"><a href="../ExitLogin">退出</a></li>
     </ul>
   </div>
   
@@ -87,84 +61,18 @@
   <div class="layui-body">
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
-        <div>
-        <form>
-            <button type="button" class="addbutton" onclick="add()">增加用户</button>
-          </form>
-        <table class="layui-table">
-      <thead>
-        <tr>
-          <th>用户类别</th>
-          <th>人数</th>
-          <th>权限</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>系统管理员</th>
-          <th>2</th>
-          <th>负责系统的安全性维护</th>
-          <th>
-            <div class="layui-btn-group">
-    <button class="layui-btn" onclick="overlay()">增加</button>
-    <button class="layui-btn layui-btn-danger layui-btn-radius" onclick="delete_confirm()">删除</button>
-  </div>
-          </th>
-         
-        </tr>
-        <tr>
-          <th>经理</th>
-          <th>2</th>
-          <th>整理销售额</th>
-          <th><div class="layui-btn-group">
-    <button class="layui-btn" onclick="overlay()">增加</button>
-    <button class="layui-btn layui-btn-danger layui-btn-radius" onclick="delete_confirm()">删除</button>
-  </div></th>
-        </tr>
-        <tr>
-          <th>售票员</th>
-          <th>5</th>
-          <th>售票 在线选座</th>
-          <th><div class="layui-btn-group">
-    <button class="layui-btn" onclick="overlay()">增加</button>
-    <button class="layui-btn layui-btn-danger layui-btn-radius" onclick="delete_confirm()">删除</button>
-  </div></th>
-        </tr>
-      </tbody> 
-    </table>
-    </div>
-  </div>
-  </div>
-   <!--增加用户-->
-   <div id="add"> 
-      <form  class="position smart-green " class="add-data">
-      <h1>增加用户</h1>
-      <label for="演出厅名称">请输入用户类别</label>
-      <input type="text"/>
-      <br/>
-      <label for="演出厅编号">请输入用户权限</label>
-      <input type="text" />
-      <br/>
-    <button class="layui-btn" onclick="overlay()" >增加</button>
-    <button type="button" class="button" onclick="add()" id="toaddstudio" >提交</button>
-      <button type="button" class="button" onclick="add()">返回</button>
-      </form>
+      
+      <div style="text-align: center;">
+          <br>
+          <br>
+            <button class="layui-btn layui-btn-normal layui-btn-radius" onclick="ManageUser()">user表管理</button>
+          <br>
+          <br>
+          <br>
+           <button class="layui-btn layui-btn-normal layui-btn-radius" onclick="ManageEmployee()">employee表管理</button>
       </div>
-  <!--修改信息-->
-  <div id="modal-overlay"> 
-  <form  class="position smart-green " class="modal-data">
-  <h1>修改用户信息</h1>
-  <label for="演出厅名称">请输入用户类别</label>
-  <input type="text"/>
-  <br/>
-  <label for="演出厅编号">请输入用户权限</label>
-  <input type="text" />
-  <br/>
-    <button type="button" class="button" onclick="overlay()" id="toeditstudio" >提交</button>
-  <button type="button" class="button" onclick="overlay()">返回</button>
-  </form>
-  </div>
+  
+
 
     </div>
   </div>

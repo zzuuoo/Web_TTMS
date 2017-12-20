@@ -44,9 +44,9 @@ public class GetAllSale extends HttpServlet {
 		JSONArray jsonArr = JSONArray.fromObject(lSales);
 		//回答
 		String h="{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":";
-		response.setContentType("json");
+		
         PrintWriter out = response.getWriter();
-        out.write(h+jsonArr.toString()+"}");
+        out.write(jsonArr.toString());
         out.close();
 	}
 

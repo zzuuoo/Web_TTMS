@@ -15,47 +15,54 @@ function delete_confirm() {
         event.returnValue = confirm("删除是不可恢复的，你确认要删除吗？");
     }
 }
+ function ManageUser(){
+    window.location.href='usertable.html';
+  }
+  function ManageEmployee(){
+    window.location.href='employeetable.html';
+  }
 //传递数据
 //增加  修改用户
-$("#toaddemp").click(function(){
-        $.ajax({
-          url: "",
-          type: "POST",
-          data: {
-              addstudio: $("#toaddemp").val()
-        },
-          success: function(data){    //    alert后台返回的参数
-              alert(data);
-       },
-          error: function(){
-              alert('访问失败');
-        }
-    });
-  });	
-  $("#toeditemp").click(function(){
-        $.ajax({
-          url: "",
-          type: "POST",
-          data: {
-              editstudio: $("#toemp").val()
-        },
-          success: function(data){    //    alert后台返回的参数
-              alert(data);
-       },
-          error: function(){
-              alert('访问失败');
-        }
-    });
-  });
+// $("#toaddemp").click(function(){
+//         $.ajax({
+//           url: "",
+//           type: "POST",
+//           data: {
+//               addstudio: $("#toaddemp").val()
+//         },
+//           success: function(data){    //    alert后台返回的参数
+//               // alert(data);
+//        },
+//           error: function(){
+//               alert('访问失败');
+//         }
+//     });
+//   });	
+//   $("#toeditemp").click(function(){
+//         $.ajax({
+//           url: "",
+//           type: "POST",
+//           data: {
+//               editstudio: $("#toemp").val()
+//         },
+//           success: function(data){    //    alert后台返回的参数
+//               // alert(data);
+//        },
+//           error: function(){
+//               alert('访问失败');
+//         }
+//     });
+//   });
 
-$.ajax({
-url: "http://www.zuo2017.xin:8080/Web_TTMS/GetAllEmployee",
-type: "GET",
-success: function (data) {    //    alert后台返回的参数
-  alert(data);
-},
-error: function (err) {
-  console.log('访问失败');
-  console.log(err);
-}
-});
+// $.ajax({
+// url: "http://www.zuo2017.xin:8080/Web_TTMS/GetAllEmployee",
+// type: "GET",
+// success: function (data) {    //    alert后台返回的参数
+//   // alert(data);
+//    console.log('data');
+// },
+// error: function (err) {
+//   console.log('访问失败');
+//   console.log(err);
+// }
+// });

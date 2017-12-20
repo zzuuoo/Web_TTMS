@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>employeetable</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../layui/layuicss/layui.css"  media="all">
+  <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
+  <script src="../employJS/employeeinit.js"></script>
+   <script src="../initJS/init.js"></script>
+  <script src="../layui/layui.js"></script>
+
+</head>
+
+<body onload="init()">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">最接地气票务管理系统</div>
+
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;"  id="emp_name">
+          <img src="../images/鹿鹿.png" class="layui-nav-img">
+          用户名
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">基本资料</a></dd>
+          <dd><a href="">安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="../ExitLogin">退出</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+          <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="main.html">首页</a>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="playmanage.html">影片管理</a>
+        </li>
+         <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="schedulemanage.html">演唱计划管理</a>
+        </li>
+        <li class="layui-nav-item">
+          <a class="" href="studiomanage.html">演出厅管理</a>
+         
+        </li>
+        <li class="layui-nav-item">
+          <a href="seatmanage.html">座位管理</a>
+
+        </li>
+        <li class="layui-nav-item">
+          <a href="usermanage.html">用户管理</a>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <div style="padding: 15px;">
+         <!-- <th lay-data="{field:'studio_id', width:80, sort: true}">ID</th> -->
+
+
+
+         <div class="demoTable" ">
+      
+          搜索ID：
+           <div class="layui-inline">
+              <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+           </div>
+
+           <button class="layui-btn" data-type="reload">搜索</button>
+          <button class="layui-btn layui-btn-normal layui-btn-radius" onclick="addEmployee()">添加</button>
+          <button class="layui-btn" data-type="getCheckData">获取选中的内容</button>  
+            <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>  
+            <button class="layui-btn" data-type="isAll">验证是否全选</button>
+          </div>
+
+<!--增加用户-->
+   <div id="add"> 
+      <form  class="position smart-green " class="add-data">
+      <h1>增加用户</h1>
+      <label for="账号">请输入用户账号</label>
+      <input type="text" />
+      <br/>
+      <label for="昵称">请输入用户昵称</label>
+      <input type="text" />
+      <br/>
+      <label for="住址">请输入用户住址</label>
+      <input type="text" />
+      <br/>
+      <label for="电话">请输入用户电话</label>
+      <input type="text" />
+      <br/>
+      <label for="邮箱">请输入用户邮箱</label>
+      <input type="text" />
+      <br/>
+    <button type="button" class="button" onclick="addEmployee()" id="toaddstudio" >提交</button>
+      <button type="button" class="button" onclick="addEmployee()">返回</button>
+      </form>
+      </div>
+
+ <br>
+ 
+<table class="layui-table" lay-data="{ limits:[10],url:'../GetAllEmployee', page:true, id:'idTest'}" lay-filter="demo">
+  <thead>
+    <tr>
+      <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+      <th lay-data="{field:'emp_id', width:80, sort: true, fixed: true}">ID</th>
+      <th lay-data="{field:'emp_no', width:80}">账号</th>
+      <th lay-data="{field:'emp_name', width:80}">昵称</th>
+      <th lay-data="{field:'emp_addr', width:120}">地址</th>
+      <th lay-data="{field:'emp_tel_num', width:120}">电话</th>
+      <th lay-data="{field:'emp_email', width:120}">邮箱</th>
+      
+
+      <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
+    </tr>
+  </thead>
+</table>
+ 
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+               
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+  //监听表格复选框选择
+  table.on('checkbox(demo)', function(obj){
+    console.log(obj)
+  });
+
+  //监听工具条
+  table.on('tool(demo)', function(obj){
+    var data = obj.data;
+    var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+    var tr = obj.tr; //获得当前行 tr 的DOM对象
+    if(obj.event === 'detail'){
+      layer.msg('ID：'+ data.emp_id + ' 的查看操作');
+    } else if(obj.event === 'del'){
+      layer.confirm('真的删除行么', function(index){
+        obj.del();//删除对应行（tr）的DOM结构，并更新缓存
+        layer.close(index);
+        //向服务端发送删除指令
+          
+
+
+      });
+    } else if(obj.event === 'edit'){
+      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+
+      //同步更新缓存对应的值
+    // obj.update({
+    //   username: '123'
+    //   ,title: 'xxx'
+    // });
+    }
+  });
+  
+  var $ = layui.$, active = {
+    getCheckData: function(){ //获取选中数据
+      var checkStatus = table.checkStatus('idTest')
+      ,data = checkStatus.data;
+      layer.alert(JSON.stringify(data));
+    }
+    ,getCheckLength: function(){ //获取选中数目
+      var checkStatus = table.checkStatus('idTest')
+      ,data = checkStatus.data;
+      layer.msg('选中了：'+ data.length + ' 个');
+    }
+    ,isAll: function(){ //验证是否全选
+      var checkStatus = table.checkStatus('idTest');
+      layer.msg(checkStatus.isAll ? '全选': '未全选')
+    }
+  };
+  
+  $('.demoTable .layui-btn').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+});
+</script>
+
+
+
+    </div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    1028298035@qq.com 欢迎反馈
+  </div>
+</div>
+</body>
+</html>

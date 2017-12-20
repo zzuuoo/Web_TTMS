@@ -41,7 +41,7 @@ public class LoginCheck extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		  PrintWriter out = response.getWriter();
+		  
 		System.out.println("清了session");
 		  request.getSession().invalidate();//清空所有session
 		  
@@ -76,7 +76,7 @@ public class LoginCheck extends HttpServlet {
 				emp_name=lemp.get(0).getEmp_name();
 	            Cookie emp_no1=new Cookie("emp_no",name);  
 	            Cookie emp_name1=new Cookie("emp_name",emp_name);  
-	            Cookie head_type=new Cookie("Head_type",us.getHead_path()); 
+	            Cookie head_type=new Cookie("head_path",us.getHead_path()); 
 	            Cookie emp_pass=new Cookie("emp_pass",us.getEmp_pass()); 
 	            Cookie emp_addr = new Cookie("emp_addr", lemp.get(0).getEmp_addr());
 	            Cookie emp_email =new Cookie("emp_email",lemp.get(0).getEmp_email());
@@ -114,6 +114,7 @@ public class LoginCheck extends HttpServlet {
 
 			
 			//反馈情况
+			PrintWriter out = response.getWriter();
 			JsonObject jsobjcet = new JsonObject();
 	        jsobjcet.addProperty("flag", flag.getFlag());
 	        jsobjcet.addProperty("type", type);

@@ -14,21 +14,41 @@ import java.sql.Statement;
 
 
 public class SeatDAO implements iSeatDAO {
-	 
-	public int insert(seat stu) {
+	public static final int PAGE_SIZE = 5; // 每页显示条数
+	private int allCount; // 数据库中条数
+	private int allPageCount; // 总页数
+	private int currentPage; // 当前页
+//	QueryRunner run = new QueryRunner();
+	
+	public static int getPageSize() {
+		return PAGE_SIZE;
+	}
 
+	public int getAllCount() {
+		return allCount;
+	}
+
+	public int getAllPageCount() {
+		return allPageCount;
+	}
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public int insert(seat stu) {
+		ConnectionManager cManager = ConnectionManager.getInstance();
+		//调用连接类获取该类实例
+		
+		Connection connection = cManager.getConnection();
+		//通过连接类实例获取数据库连接对象
+		
+		PreparedStatement pstmt = null;
 		try {
 			
 			
 			String sql = "insert into seat(studio_id, seat_row, seat_column,seat_status )"
 					+ " values(?,?,?,?)";
-			ConnectionManager cManager = ConnectionManager.getInstance();
-			//调用连接类获取该类实例
-			
-			Connection connection = cManager.getConnection();
-			//通过连接类实例获取数据库连接对象
-			
-			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			//获取PreparedStatement借口实例
 			
 			pstmt.setInt(1, stu.getStudio_id());
@@ -40,17 +60,6 @@ public class SeatDAO implements iSeatDAO {
 			pstmt.executeUpdate();
 				//执行sql语句
 				
-			
-			ResultSet rst = pstmt.getGeneratedKeys();	
-			//获取结果集
-			
-			if(rst.next()&&rst.first()){
-				stu.setSeat_id(rst.getInt(1));
-			}
-			
-			cManager.close(rst, pstmt, connection);
-			//关闭所有连接
-			
 			System.out.println("employee插入成功");
 			
 			return 1;
@@ -58,6 +67,9 @@ public class SeatDAO implements iSeatDAO {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			ConnectionManager.close(null, pstmt, connection);
+			//关闭所有连接
 		}
 		return 0;
 	}
@@ -65,6 +77,9 @@ public class SeatDAO implements iSeatDAO {
 	
 	public int update(seat stu) {
 		int rtn = 1;
+		ConnectionManager cManager = ConnectionManager.getInstance();
+		Connection connection =  cManager.getConnection();
+		PreparedStatement pstmt = null;
 		try {
 			String sql = "update seat set " + " studio_id ="
 					+ stu.getStudio_id() + ", " + " seat_row = "
@@ -72,17 +87,17 @@ public class SeatDAO implements iSeatDAO {
 					+ stu.getSeat_column() + " ";
 
 			sql += " where sched_id = " + stu.getSeat_id();
-			ConnectionManager cManager = ConnectionManager.getInstance();
-			Connection connection =  cManager.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.executeUpdate();
 			ResultSet rst = pstmt.getGeneratedKeys();	
-			cManager.close(rst, pstmt, connection);
-
+			
 			return 1;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			ConnectionManager.close(null, pstmt, connection);
+
 		}
 		return 0;
 	}
@@ -90,40 +105,45 @@ public class SeatDAO implements iSeatDAO {
 	 
 	public int delete(int ID) {
 		int rtn = 0;
+		ConnectionManager cManager = ConnectionManager.getInstance();
+		Connection connection =  cManager.getConnection();
+		PreparedStatement pstmt = null;
 		try {
 			String sql = "delete from seat ";
-			sql += " where seat_id = " + ID;
-			ConnectionManager cManager = ConnectionManager.getInstance();
-			Connection connection =  cManager.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sql += " where seat_id = ?";
+			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, ID);
 			pstmt.executeUpdate();
-			ResultSet rst = pstmt.getGeneratedKeys();	
-			cManager.close(rst, pstmt, connection);
-
+			
 			return 1;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			ConnectionManager.close(null, pstmt, connection);
+
 		}
 		return 0;
 	}
 
 	public int delete(String condt) {
 		int rtn = 0;
+		ConnectionManager cManager = ConnectionManager.getInstance();
+		Connection connection =  cManager.getConnection();
+		PreparedStatement pstmt = null;
 		try {
 			String sql = "delete from seat ";
-			sql += " where  " + condt;
-			ConnectionManager cManager = ConnectionManager.getInstance();
-			Connection connection =  cManager.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sql += " where  ?";
+			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setString(1, condt);
 			pstmt.executeUpdate();
-			ResultSet rst = pstmt.getGeneratedKeys();	
-			cManager.close(rst, pstmt, connection);
-
 			return 1;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			ConnectionManager.close(null, pstmt, connection);
+
 		}
 		return 0;
 	}
@@ -132,15 +152,16 @@ public class SeatDAO implements iSeatDAO {
 	public List<seat> select(String condt) {
 		List<seat> stuList = null;
 		stuList = new LinkedList<seat>();
+		ConnectionManager cManager = ConnectionManager.getInstance();
+			Connection connection=null;
+			connection =  cManager.getConnection();
+		PreparedStatement pstmt = null;
 		try {
 			String sql = "select * from seat ";
 			condt.trim();
 			if (!condt.isEmpty())
 				sql += " where " + condt;
-			ConnectionManager cManager = ConnectionManager.getInstance();
-  			Connection connection=null;
-  			connection =  cManager.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.executeQuery(sql);
 			ResultSet rst = pstmt.executeQuery(sql);
 			if (rst != null) {
@@ -154,11 +175,11 @@ public class SeatDAO implements iSeatDAO {
 					stuList.add(stu);
 				}
 			}
-			cManager.close(rst, pstmt, connection);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-
+			ConnectionManager.close(null, pstmt, connection);
 		}
 
 		return stuList;

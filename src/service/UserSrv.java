@@ -8,7 +8,7 @@ import idao.iUserDao;
 
 
 public class UserSrv {
-	private iUserDao uDAO=DAOFactory.creatUserDAO();
+	private iUserDao uDAO=DAOFactory.createUserDAO();
 	
 	public int add(user u){
 		return uDAO.insert(u); 		

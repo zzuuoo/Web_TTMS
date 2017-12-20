@@ -5,7 +5,7 @@
     //验证注册
     $("#register").click(function() {
         $.ajax({
-            url: "",
+            url: "LoginCheck",
             type: "POST",
             data: {
                 emp_no: $("#emp_no").val(),

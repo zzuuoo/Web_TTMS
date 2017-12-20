@@ -4,10 +4,10 @@ import java.util.List;
 
 import bean.employee;
 import idao.DAOFactory;
-import idao.iEmployee;
+import idao.iEmployeeDAO;
 
 public class EmployeeSrv {
-	private iEmployee eDAO = DAOFactory.createEmployeeDAO();
+	private iEmployeeDAO eDAO = DAOFactory.createEmployeeDAO();
 	public int add(employee e){
 		return eDAO.insert(e); 		
 	}

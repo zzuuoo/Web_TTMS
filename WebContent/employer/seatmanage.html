@@ -10,32 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../seatcss/style.css">
 <link rel="stylesheet" href="../layui/layuicss/layui.css" media="all">
 <link rel="stylesheet" href="../css/common.css">
-   <script>
-  function init()
-  {
-    var head= "<img src=\"../img/login.jpg\" class=\"layui-nav-img\" id = \"head_img\">";
-    //document.getElementById("emp_name").innerHTML=head+getCookie("emp_name");
-    document.getElementById("emp_name").innerHTML=head+'游客';
-  }
-  
-  function getCookie(c_name)
-  {
-  if (document.cookie.length>0)
-    {
-    c_start=document.cookie.indexOf(c_name + "=")
-    if (c_start!=-1)
-      { 
-      c_start=c_start + c_name.length+1 
-      c_end=document.cookie.indexOf(";",c_start)
-      if (c_end==-1) c_end=document.cookie.length
-      return unescape(document.cookie.substring(c_start,c_end))
-      } 
-    }
-  return ""
-  }
-
-  
-  </script>
+ <script src="../initJS/init.js"></script>
 </head>
 
 <body onload="init()">
@@ -54,7 +29,7 @@
           <dd><a href="">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="../index.html">退出</a></li>
+      <li class="layui-nav-item"><a href="../ExitLogin">退出</a></li>
     </ul>
   </div>
   
@@ -167,6 +142,14 @@
   </div>
 </div>
 <script src="../layui/layui.js"></script>
+<script src="../employJS/edithouse.js"></script>
+<script>
+  
+  function editseat() {
+    var e = document.getElementById('seat');
+    e.style.visibility = (e.style.visibility == "visible")?"hidden":"visible";
+  }
+</script>
 <script>
 //JavaScript代码区域
 layui.use('element', function(){

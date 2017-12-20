@@ -4,9 +4,9 @@
 	<head>
 		<meta charset="utf-8">
 		<title>登录</title>
-		<link rel="stylesheet" href="css/reset.css" />
-		<link rel="stylesheet" href="css/common.css" />
-		<script type="text/javascript" src="./loginBox-js/jquery.min.js"></script>
+		<link rel="stylesheet" href="./css/reset.css" />
+		<link rel="stylesheet" href="./css/common.css" />
+		<script type="text/javascript" src="./js/jquery.min.js"></script>
 	</head>
 	<body>
 	<div>
@@ -25,11 +25,11 @@
 						</div>
 						<div>
 							<div class="form_text_ipt">
-								<input name="mobile" type="text" placeholder="手机号" id="mobile">
+								<input name="mobile" type="text" placeholder="账号" id="mobile" onblur="checkEmpNo()">
 							</div>
 							<div class="ececk_warning"><span>数据不能为空</span></div>
 							<div class="form_text_ipt">
-								<input name="password" type="password" placeholder="密码" id="emp_pass">
+								<input name="password" type="password" placeholder="密码" id="emp_pass" onblur="checkEmpPass()">
 							</div>
 							<div class="ececk_warning"><span>数据不能为空</span></div>
 							<div class="form_check_ipt">
@@ -61,8 +61,8 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="loginJS/login.js" ></script>
-		<script type="text/javascript" src="loginJS/session.js" ></script>
-		<script type="text/javascript" src="loginBox-js/common.js" ></script>
+		<script type="text/javascript" src="./loginJS/login.js" ></script>
+		<script type="text/javascript" src="./loginJS/session.js" ></script>
+		<script type="text/javascript" src="./js/common.js" ></script>
 	</body>
 </html>

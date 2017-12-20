@@ -13,10 +13,8 @@ import dao.UserDao;
 
 public class DAOFactory {
 
-	public static iUserDao creatUserDAO(){
-		return new UserDao();
-	}
-	public static iEmployee createEmployeeDAO() {
+	
+	public static iEmployeeDAO createEmployeeDAO() {
 		return new EmployeeDao();
 	}
 	public static iStudioDAO createStudioDAO() {

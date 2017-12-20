@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import bean.employee;
+import dao.EmployeeDao;
+import idao.DAOFactory;
+import idao.iEmployeeDAO;
 import net.sf.json.JSONArray;
 import service.EmployeeSrv;
 
@@ -35,12 +38,18 @@ public class GetAllEmployee extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("获取所有员信息");
 		response.setCharacterEncoding("UTF-8");
+		int page = Integer.valueOf(request.getParameter("page"));
+//		int limit = Integer.valueOf(request.getParameter("limit"));
 		//获取所有演出厅信息
-		List<employee> lEmployees = new EmployeeSrv().FetchAll();
+		iEmployeeDAO employeeDao = DAOFactory.createEmployeeDAO();
+		List<employee> lEmployees1 = new EmployeeSrv().FetchAll();
+		List<employee> lEmployees = employeeDao.findEmployeeByPage(page, null);
+		System.out.println("employee:"+page+",s:"+lEmployees1.size());
+//		lEmployees.size();
 		//把演出厅信息转换为json类型
 		JSONArray jsonArr = JSONArray.fromObject(lEmployees);
 		//回答
-		String h="{\"code\":0,\"msg\":\"\",\"count\":1000,\"data\":";
+		String h="{\"code\":0,\"msg\":\"\",\"count\":"+lEmployees1.size()+",\"data\":";
 		response.setContentType("json");
         PrintWriter out = response.getWriter();
         out.write(h+jsonArr.toString()+"}");

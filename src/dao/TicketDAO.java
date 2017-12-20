@@ -62,17 +62,27 @@ public class TicketDAO implements iTicketDAO {
 		int rtn = 0;
 		if(stu.getTicket_locked_time()!=null){
 		try {
-			String sql = "update ticket set " + " seat_id ="
-					+ stu.getSeat_id() + ", " + " sched_id = "
-					+ stu.getSched_id() + ", " + " ticket_price= "
-					+ stu.getTicket_price() + ", " + " ticket_status = "
-					+ stu.getTicket_status() + ", "+"ticket_locked_time='"
-					+sdf.format(stu.getTicket_locked_time())+"'";
-
-			sql += " where ticket_id = " + stu.getTicket_id();
+//			String sql = "update ticket set " + " seat_id ="
+//					+ stu.getSeat_id() + ", " + " sched_id = "
+//					+ stu.getSched_id() + ", " + " ticket_price= "
+//					+ stu.getTicket_price() + ", " + " ticket_status = "
+//					+ stu.getTicket_status() + ", "+"ticket_locked_time='"
+//					+sdf.format(stu.getTicket_locked_time())+"'";
+//
+//			sql += " where ticket_id = " + stu.getTicket_id();
+			String sql = "update ticket set  seat_id = ?,"
+					+ " sched_id = ?, ticket_price= ?,"
+					+ " ticket_status = ?,"
+					+"ticket_locked_time=? where ticket_id = ?;";
 			ConnectionManager cManager = ConnectionManager.getInstance();
 			Connection connection =  cManager.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, stu.getSeat_id());
+			pstmt.setInt(2, stu.getSched_id());
+			pstmt.setDouble(3, stu.getTicket_price());
+			pstmt.setInt(4, stu.getTicket_status());
+			pstmt.setTimestamp(5, new java.sql.Timestamp(stu.getTicket_locked_time().getTime()));
+			pstmt.setInt(6, stu.getTicket_id());
 			pstmt.executeUpdate();
 			ResultSet rst = pstmt.getGeneratedKeys();	
 			cManager.close(rst, pstmt, connection);
@@ -106,11 +116,11 @@ public class TicketDAO implements iTicketDAO {
 	 
 	public int delete(int ID) {
 		try {
-			String sql = "delete from ticket ";
-			sql += " where ticket_id = " + ID;
+			String sql = "delete from ticket  where ticket_id = ?;";
 			ConnectionManager cManager = ConnectionManager.getInstance();
 			Connection connection =  cManager.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, ID);
 			pstmt.executeUpdate();
 			ResultSet rst = pstmt.getGeneratedKeys();	
 			cManager.close(rst, pstmt, connection);

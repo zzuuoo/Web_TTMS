@@ -18,9 +18,39 @@ import tomcatDb.ConnectionManager;
 //private String studio_introduction;
 //private int studio_flag;// 0：尚未生成座位，可以根据行列信息生成座位\r\n  1：已经根据影厅的座位信息
 public class StudioDao implements iStudioDAO{
+	
+	public static final int PAGE_SIZE = 5; // 每页显示条数
+	private int allCount; // 数据库中条数
+	private int allPageCount; // 总页数
+	private int currentPage; // 当前页
+	public int getAllCount() {
+		return allCount;
+	}
+	public void setAllCount(int allCount) {
+		this.allCount = allCount;
+	}
+	public int getAllPageCount() {
+		return allPageCount;
+	}
+	public void setAllPageCount(int allPageCount) {
+		this.allPageCount = allPageCount;
+	}
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
 
 	@Override
 	public int insert(studio p) {
+		ConnectionManager cManager = ConnectionManager.getInstance();
+		//调用连接类获取该类实例
+		
+		Connection connection = cManager.getConnection();
+		//通过连接类实例获取数据库连接对象
+		
+		PreparedStatement pstmt = null;
 		try {
 			
 			String sql = "insert into studio(studio_name,studio_row_count,"
@@ -28,13 +58,9 @@ public class StudioDao implements iStudioDAO{
 					+ " values(?,?,?,?,?)";
 			//sql语句，参数未初始化
 			
-			ConnectionManager cManager = ConnectionManager.getInstance();
-			//调用连接类获取该类实例
 			
-			Connection connection = cManager.getConnection();
-			//通过连接类实例获取数据库连接对象
 			
-			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			//获取PreparedStatement借口实例
 			
 			//非空值为空，则不能插入
@@ -49,16 +75,7 @@ public class StudioDao implements iStudioDAO{
 				pstmt.executeUpdate();
 				//执行sql语句
 				
-			
-			ResultSet rst = pstmt.getGeneratedKeys();	
-			//获取结果集
-			
-			if(rst.next()&&rst.first()){
-				p.setStudio_id(rst.getInt(1));
-			}
-			
-			cManager.close(rst, pstmt, connection);
-			//关闭所有连接
+	
 			
 			System.out.println("studio插入成功");
 			
@@ -67,12 +84,17 @@ public class StudioDao implements iStudioDAO{
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			ConnectionManager.close(null, pstmt, connection);
 		}
 		return 0;
 	}
 
 	@Override
 	public int update(studio stu) {
+		ConnectionManager cManager = ConnectionManager.getInstance();
+		Connection connection =  cManager.getConnection();
+		PreparedStatement pstmt = null;
 		try {
 			String sql = "update studio set " + " studio_name ='"
 					+ stu.getStudio_name() + "', " + " studio_row_count = "
@@ -82,37 +104,39 @@ public class StudioDao implements iStudioDAO{
 					+stu.getStudio_flag();
 
 			sql += " where studio_id = " + stu.getStudio_id();
-			ConnectionManager cManager = ConnectionManager.getInstance();
-			Connection connection =  cManager.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pstmt.executeUpdate();
-			ResultSet rst = pstmt.getGeneratedKeys();	
-			cManager.close(rst, pstmt, connection);
+			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeUpdate();	
+
 
 			return 1;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			ConnectionManager.close(null, pstmt, connection);
 		}
 		return 0;
 	}
 
 	@Override
 	public int delete(int s_id) {
+		ConnectionManager cManager = ConnectionManager.getInstance();
+		Connection connection =  cManager.getConnection();
+		PreparedStatement pstmt = null;
 		try {
 			String sql = "delete from  studio ";
-			sql += " where studio_id = " + s_id;
-			ConnectionManager cManager = ConnectionManager.getInstance();
-			Connection connection =  cManager.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sql += " where studio_id = ?";
+			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, s_id);
 			pstmt.executeUpdate();
-			ResultSet rst = pstmt.getGeneratedKeys();	
-			cManager.close(rst, pstmt, connection);
+	
 
 			return 1;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			ConnectionManager.close(null, pstmt, connection);
 		}
 		return 0;
 	}
@@ -128,14 +152,15 @@ public class StudioDao implements iStudioDAO{
 		List<studio> studios = null;
 		studio s;
 		studios=new LinkedList<studio>();
+		ConnectionManager cManager = ConnectionManager.getInstance();
+			Connection connection=null;
+			connection =  cManager.getConnection();
+		PreparedStatement pstmt = null;
   		try {
   			String sql = "select * from studio	";
 
   		//用线程池	
-  			ConnectionManager cManager = ConnectionManager.getInstance();
-  			Connection connection=null;
-  			connection =  cManager.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+  			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.executeQuery(sql);
 			ResultSet rst = pstmt.executeQuery(sql);
 			
@@ -153,19 +178,100 @@ public class StudioDao implements iStudioDAO{
   				}
   			}
 
-  			cManager.close(rst, pstmt, connection);
+  			
   			
   		} catch (Exception a) {
   			a.printStackTrace();
-  		}
+  		}finally {
+  			ConnectionManager.close(null, pstmt, connection);
+		}
   			
   		return studios;
 	}
 
 	@Override
 	public List<studio> selectwhat(String condt) {
-		// TODO Auto-generated method stub
-		return null;
+		List<studio> studios = null;
+		studio s;
+		studios=new LinkedList<studio>();
+		ConnectionManager cManager = ConnectionManager.getInstance();
+			Connection connection=null;
+			connection =  cManager.getConnection();
+		PreparedStatement pstmt = null;
+  		try {
+  			String sql = "select * from studio	where ";
+  			sql=sql+condt;
+
+  		//用线程池	
+  			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeQuery(sql);
+			ResultSet rst = pstmt.executeQuery(sql);
+			
+  			if (rst!=null) {
+  				while(rst.next()){
+  						s = new studio();
+  						s.setStudio_name(rst.getString("studio_name"));
+  						s.setStudio_id(rst.getInt("studio_id"));
+  						s.setStudio_col_count(rst.getInt("studio_col_count"));
+  						s.setStudio_row_count(rst.getInt("studio_row_count"));
+  						s.setStudio_introduction(rst.getString("studio_introduction"));
+  						s.setStudio_flag(rst.getInt("studio_flag"));
+  						studios.add(s);
+  						
+  				}
+  			}
+
+  			
+  			
+  		} catch (Exception a) {
+  			a.printStackTrace();
+  		}finally {
+  			ConnectionManager.close(null, pstmt, connection);
+		}
+  			
+  		return studios;
+	}
+
+	public studio selectByStudioId(int id) {
+		List<studio> studios = null;
+		studio s;
+		studios=new LinkedList<studio>();
+		ConnectionManager cManager = ConnectionManager.getInstance();
+			Connection connection=null;
+			connection =  cManager.getConnection();
+		PreparedStatement pstmt = null;
+  		try {
+  			String sql = "select * from studio	where ";
+  			sql=sql+" studio_id = "+id;
+
+  		//用线程池	
+  			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pstmt.executeQuery(sql);
+			ResultSet rst = pstmt.executeQuery(sql);
+			
+  			if (rst!=null) {
+  				while(rst.next()){
+  						s = new studio();
+  						s.setStudio_name(rst.getString("studio_name"));
+  						s.setStudio_id(rst.getInt("studio_id"));
+  						s.setStudio_col_count(rst.getInt("studio_col_count"));
+  						s.setStudio_row_count(rst.getInt("studio_row_count"));
+  						s.setStudio_introduction(rst.getString("studio_introduction"));
+  						s.setStudio_flag(rst.getInt("studio_flag"));
+  						studios.add(s);
+  						
+  				}
+  			}
+
+  			
+  			
+  		} catch (Exception a) {
+  			a.printStackTrace();
+  		}finally {
+  			ConnectionManager.close(null, pstmt, connection);
+		}
+  			
+  		return studios.get(0);
 	}
 
 }
