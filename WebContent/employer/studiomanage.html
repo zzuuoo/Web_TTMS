@@ -11,9 +11,12 @@
 <title>影厅 管理</title>
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <link rel="stylesheet" href="../layui/layuicss/layui.css" media="all">
+   <link rel="stylesheet" href="../layui/layuicss/layui.css"  media="all">
+  <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
   <link rel="stylesheet" href="../css/common.css">
   <script type="text/javascript" src="../js/jquery.min.js"></script>
+      <script src="../layui/layui.js"></script>
+      <script src="../studioJS/studioinit.js"></script>
 
    <script src="../initJS/init.js"></script>
 </head>
@@ -25,14 +28,11 @@
 
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
-        <a href="javascript:;"  id="emp_name">
+        <a href="demo.html"  id="emp_name">
           <img src="../images/鹿鹿.png" class="layui-nav-img">
           用户名
         </a>
-        <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
-          <dd><a href="">安全设置</a></dd>
-        </dl>
+        
       </li>
       <li class="layui-nav-item"><a href="../ExitLogin">退出</a></li>
     </ul>
@@ -44,12 +44,6 @@
        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
           <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="main.html">首页</a>
-        </li>
-         <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="playmanage.html">影片管理</a>
-        </li>
-         <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="schedulemanage.html">演唱计划管理</a>
         </li>
         <li class="layui-nav-item">
           <a class="" href="studiomanage.html">演出厅管理</a>
@@ -71,37 +65,210 @@
     <!-- 内容主体区域 -->
     <div style="padding: 15px;">
 
-<table class="layui-table" lay-data="{url:'http://www.zuo2017.xin:8080/Web_TTMS/GetAllStudio', id:'test3'}" lay-filter="test3">
+
+         <div class="demoTable" ">
+      
+          搜索ID：
+           <div class="layui-inline">
+              <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+           </div>
+
+           <button class="layui-btn" data-type="reload">搜索</button>
+           <button class="layui-btn" data-type="getCheckData">删除</button> 
+            <button class="layui-btn layui-btn-normal layui-btn-radius" onclick="addStudio()">添加</button>
+              
+          </div>
+
+
+          <!--增加用户-->
+   <div id="add"> 
+      <form  class="position smart-green " class="add-data">
+      <h1>添加用户</h1>
+      <label for="厅名">请输入演出厅名字</label>
+      <input type="text" id="studio_name"/>
+      <br/>
+      <label for="row">请输入行数</label>
+      <input type="text" id="studio_row_count"/>
+      <br/>
+      <label for="col">请输入列数</label>
+      <input type="text" id="studio_col_count"/>
+      <br/>
+      <label for="简介">请输入演出厅简介</label>
+      <input type="text" id="studio_introduction"/>
+      <br/>
+      <label for="状态">请输入演出厅状态（0:已生成座位,1：未有座位）</label>
+      <input type="text" id="studio_flag" value="0" disabled="disabled">
+      <br/>
+    <button type="button" class="button" onclick="submitStudio()" id="toaddstudio" >提交</button>
+      <button type="button" class="button" onclick="addStudio()">返回</button>
+      </form>
+      </div>
+
+ <br>
+
+
+<table class="layui-table" lay-data="{limits:[10],url:'../GetAllStudio', page:true, id:'studiotable'}" lay-filter="demo2">
   <thead>
-    <tr>
-      <th lay-data="{type:'checkbox'}">ID</th>
+   <tr>
+     <th lay-data="{type:'checkbox'}">ID</th>
       <th lay-data="{field:'studio_id', width:80, sort: true}">ID</th>
       <th lay-data="{field:'studio_name', width:120, sort: true, edit: 'text'}">名</th>
       <th lay-data="{field:'studio_col_count', edit: 'text', minWidth: 100}">行</th>
       <th lay-data="{field:'studio_row_count', edit: 'text', minWidth: 100}">列</th>
       <th lay-data="{field:'studio_introduction', edit: 'text', minWidth: 150}">介绍</th>
-      <th lay-data="{field:'studio_flag', sort: true, edit: 'text'}">状态</th>
+      <th lay-data="{field:'studio_flag', sort: true}">状态</th>
+
+      <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo2'}"></th>
     </tr>
   </thead>
 </table>
-<div style="text-align: center;">
-  <button class="layui-btn layui-btn-radius" style="">添加</button>
-   <button class="layui-btn layui-btn-danger layui-btn-radius">删除</button>
-</div>
  
-          
-<script src="../layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script type="text/html" id="barDemo2">
+  <a class="layui-btn layui-btn-xs" lay-event="edit2">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del2">删除</a>
+</script>
+               
 <script>
+layui.use('table', function(){
+  var table = layui.table;
+  //监听表格复选框选择
+  table.on('checkbox(demo2)', function(obj){
+    console.log(obj)
+  });
+  //监听工具条
+  table.on('tool(demo2)', function(obj){
+    var data = obj.data;
+  if(obj.event === 'del2'){
+      layer.confirm('残忍删除？'+data.studio_id, function(index){
+        obj.del();
+        layer.close(index);
+//向服务器发送删除指令
+        $.ajax({
+        url: "../StudioServlet",
+        type: "POST",
+        dataType:'json',
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        data: {
+            method:"delete",
+            studio_id: data.studio_id
+    },
+        success: function(data){    //    alert后台返回的参数
+        	 console.log(data.flag);
+        if(data.flag=='yes'){
+        	layer.alert("删除成功");
+        }else{
+        	alert("删除失败");
+        	location.reload();
+        }
+        
+        
+             //layer.alert("删除成功");
+    },
+    complete: function() {
+      //请求完成的处理 ，如果没有，可以不用
+       // alert(data.flag+data.type);
+        //    console.log("删除成功");
+        //  layer.alert("删除成功");
+    },
+        error: function(){
+            // alert('访问失败');
+    }
+        });
+
+
+      });
+    } else if(obj.event === 'edit2'){
+      layer.alert('请直接在表格内编辑');
+
+    }
+  });
+  
+  var $ = layui.$, active = {
+    getCheckData: function(){ //获取选中数据
+      var checkStatus = table.checkStatus('studiotable')
+      ,data = checkStatus.data;
+      for (var i = 0; i < data.length; i++) {
+        
+        console.log(data[i].studio_id);
+
+        $.ajax({
+        url: "../StudioServlet",
+        type: "POST",
+        dataType:'json',
+        data: {
+            method: "delete",
+            studio_id: data[i].studio_id
+    },
+        success: function(data){    //    alert后台返回的参数
+          
+    },
+      complete: function() {
+      //请求完成的处理 ，如果没有，可以不用
+       // alert(data.flag+data.type);
+            console.log("删除成功");
+             // alert("删除成功");
+        },
+        error: function(){
+            // alert('访问失败');
+      }
+        });
+
+      }
+      // layer.alert("删除成功");
+      location.reload();
+    }
+  };
+  
+  $('.demoTable .layui-btn').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+});
+
+
+
 layui.use('table', function(){
   var table = layui.table;
   
   //监听单元格编辑
-  table.on('edit(test3)', function(obj){
+  table.on('edit(demo2)', function(obj){
     var value = obj.value //得到修改后的值
     ,data = obj.data //得到所在行所有键值
     ,field = obj.field; //得到字段
-    layer.msg('[ID: '+ data.studio_id +'] ' + field + ' 字段更改为：'+ value);
+    // layer.msg(field + ' 字段更改为：'+ value);
+     $.ajax({
+                url: "../StudioServlet",
+                type: "POST",
+                dataType:'json',
+                data: {
+                    method: "update",
+                    studio_id: data.studio_id,
+                    studio_name:data.studio_name,
+                    studio_col_count:data.studio_col_count,
+                    studio_row_count:data.studio_row_count,
+                    studio_introduction:data.studio_introduction,
+                    studio_flag:data.studio_flag
+            },
+                success: function(data){    //    alert后台返回的参数
+                   console.log(data);
+            },
+              complete: function() {
+              //请求完成的处理 ，如果没有，可以不用
+               // alert(data.flag+data.type);
+                    console.log("更新成功");
+                    layer.msg('[studio_name: '+ data.studio_name +'] ' + field + ' 字段更改为：'+ value); 
+                     
+                },
+                error: function(){
+                    // alert('访问失败');
+              }
+                });
+
+     
+
+
+
+
   });
 });
 </script>
@@ -115,15 +282,7 @@ layui.use('table', function(){
   </div>
 </div>
 
-<!--<script src="../employJS/edithouse.js"></script>-->
-<script>
-//JavaScript代码区域
-layui.use('element', function(){
-  var element = layui.element;
-  
-});
+<script src="../employJS/edithouse.js"></script>
 
-
-</script>
 </body>
 </html>

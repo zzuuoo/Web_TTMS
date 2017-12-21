@@ -20,7 +20,7 @@ import tomcatDb.ConnectionManager;
 //private int studio_flag;// 0：尚未生成座位，可以根据行列信息生成座位\r\n  1：已经根据影厅的座位信息
 public class StudioDao implements iStudioDAO{
 	
-	public static final int PAGE_SIZE = 5; // 每页显示条数
+	public static final int PAGE_SIZE = 10; // 每页显示条数
 	private int allCount; // 数据库中条数
 	private int allPageCount; // 总页数
 	private int currentPage; // 当前页
@@ -52,6 +52,7 @@ public class StudioDao implements iStudioDAO{
 		//通过连接类实例获取数据库连接对象
 		
 		PreparedStatement pstmt = null;
+		ResultSet rst =null;
 		try {
 			
 			String sql = "insert into studio(studio_name,studio_row_count,"
@@ -75,6 +76,11 @@ public class StudioDao implements iStudioDAO{
 				
 				pstmt.executeUpdate();
 				//执行sql语句
+				rst = pstmt.getGeneratedKeys();
+
+				if(rst.next()&&rst.first()){
+					p.setStudio_id(rst.getInt(1));
+				}
 				
 	
 			
@@ -107,7 +113,7 @@ public class StudioDao implements iStudioDAO{
 			sql += " where studio_id = " + stu.getStudio_id();
 			pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.executeUpdate();	
-
+			System.out.println(stu.getStudio_introduction());
 
 			return 1;
 			

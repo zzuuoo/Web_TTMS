@@ -13,6 +13,7 @@
   <script src="../employJS/employeeinit.js"></script>
    <script src="../initJS/init.js"></script>
   <script src="../layui/layui.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
 
 </head>
 
@@ -23,14 +24,11 @@
 
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
-        <a href="javascript:;"  id="emp_name">
+        <a href="demo.html"  id="emp_name">
           <img src="../images/鹿鹿.png" class="layui-nav-img">
           用户名
         </a>
-        <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
-          <dd><a href="">安全设置</a></dd>
-        </dl>
+        
       </li>
       <li class="layui-nav-item"><a href="../ExitLogin">退出</a></li>
     </ul>
@@ -42,12 +40,6 @@
        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
           <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="main.html">首页</a>
-        </li>
-         <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="playmanage.html">影片管理</a>
-        </li>
-         <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="schedulemanage.html">演唱计划管理</a>
         </li>
         <li class="layui-nav-item">
           <a class="" href="studiomanage.html">演出厅管理</a>
@@ -87,23 +79,23 @@
 <!--增加用户-->
    <div id="add"> 
       <form  class="position smart-green " class="add-data">
-      <h1>增加用户</h1>
+      <h1>添加用户</h1>
       <label for="账号">请输入用户账号</label>
-      <input type="text" />
+      <input type="text" id="emp_no"/>
       <br/>
       <label for="昵称">请输入用户昵称</label>
-      <input type="text" />
+      <input type="text" id="emp_name"/>
       <br/>
       <label for="住址">请输入用户住址</label>
-      <input type="text" />
+      <input type="text" id="emp_addr"/>
       <br/>
       <label for="电话">请输入用户电话</label>
-      <input type="text" />
+      <input type="text" id="emp_tel_num"/>
       <br/>
       <label for="邮箱">请输入用户邮箱</label>
-      <input type="text" />
+      <input type="text" id="emp_email"/>
       <br/>
-    <button type="button" class="button" onclick="addEmployee()" id="toaddstudio" >提交</button>
+    <button type="button" class="button" onclick="submitEmployee()" id="toaddstudio" >提交</button>
       <button type="button" class="button" onclick="addEmployee()">返回</button>
       </form>
       </div>
@@ -116,10 +108,10 @@
       <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
       <th lay-data="{field:'emp_id', width:80, sort: true, fixed: true}">ID</th>
       <th lay-data="{field:'emp_no', width:80}">账号</th>
-      <th lay-data="{field:'emp_name', width:80}">昵称</th>
-      <th lay-data="{field:'emp_tel_num', width:120}">电话</th>
-      <th lay-data="{field:'emp_email', width:150}">邮箱</th>
-       <th lay-data="{field:'emp_addr', minWidth:150}">地址</th>
+      <th lay-data="{field:'emp_name', width:80,edit: 'text'}">昵称</th>
+      <th lay-data="{field:'emp_tel_num', width:120,edit: 'text'}">电话</th>
+      <th lay-data="{field:'emp_email', width:150,edit: 'text'}">邮箱</th>
+       <th lay-data="{field:'emp_addr', minWidth:150,edit: 'text'}">地址</th>
       
 
       <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
@@ -177,7 +169,7 @@ layui.use('table', function(){
 
       });
     } else if(obj.event === 'edit'){
-      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+      layer.alert('请直接在表格内编辑');
 
       //同步更新缓存对应的值
     // obj.update({
@@ -191,7 +183,40 @@ layui.use('table', function(){
     getCheckData: function(){ //获取选中数据
       var checkStatus = table.checkStatus('idTest')
       ,data = checkStatus.data;
-      layer.alert(JSON.stringify(data));
+  //    layer.alert(JSON.stringify(data));
+
+
+      for (var i = 0; i < data.length; i++) {
+        
+        console.log(data[i].emp_id);
+
+        $.ajax({
+        url: "../EmployeeServlet",
+        type: "POST",
+        dataType:'json',
+        data: {
+            method: "delete",
+            emp_id: data[i].emp_id
+    },
+        success: function(data){    //    alert后台返回的参数
+          
+    },
+      complete: function() {
+      //请求完成的处理 ，如果没有，可以不用
+       // alert(data.flag+data.type);
+            console.log("删除成功");
+             alert("删除成功");
+        },
+        error: function(){
+            // alert('访问失败');
+      }
+        });
+
+      }
+      // layer.alert("删除成功");
+      location.reload();
+
+
     }
     
   };
@@ -201,6 +226,53 @@ layui.use('table', function(){
     active[type] ? active[type].call(this) : '';
   });
 });
+
+
+
+layui.use('table', function(){
+	  var table = layui.table;
+	  
+	  //监听单元格编辑
+	  table.on('edit(demo)', function(obj){
+	    var value = obj.value //得到修改后的值
+	    ,data = obj.data //得到所在行所有键值
+	    ,field = obj.field; //得到字段
+	    layer.msg('[ID: '+ data.emp_id +'] ' + field + ' 字段更改为：'+ value);
+	    $.ajax({
+	        url: "../EmployeeServlet",
+	        type: "POST",
+	        dataType:'json',
+	        data: {
+	            method: "update",
+	            emp_no: data.emp_no,
+	            emp_id:data.emp_id,
+	            emp_name:data.emp_name,
+	            emp_tel_num:data.emp_tel_num,
+              emp_email:data.emp_email,
+              emp_addr:data.emp_addr
+	    },
+	        success: function(data){    //    alert后台返回的参数
+	          console.log(data);
+	    },
+	      complete: function() {
+	      //请求完成的处理 ，如果没有，可以不用
+	       // alert(data.flag+data.type);
+	            console.log("更新成功");
+	            // layer.msg('[emp_no: '+ data.emp_no +'] ' + field + ' 字段更改为：'+ value); 
+	             
+	        },
+	        error: function(){
+	            // alert('访问失败');
+	      }
+	        });
+	    
+	    
+	    
+	  });
+	});
+
+
+
 </script>
 
 

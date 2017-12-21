@@ -1,38 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>usertable</title>
-<script type="text/javascript">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  
+  <!-- 重置文件 -->
+  <link rel="stylesheet" href="../resetcss/normalize.css">
+  <link rel="stylesheet" href="../resetcss/style.css">
+  <title>注册</title>
+  <script type="text/javascript">
 	function init() {
 		document.getElementById("emp_no").value=window.user.emp_no;
 		document.getElementById("emp_pass").value=window.user.emp_pass;
-		document.getElementById("emp_type").value=window.user.type;
-		document.getElementById("head_path").value=window.user.head_path;
+		if(window.user.type=='1'){
+			document.getElementById("type").value='1';
+		}else{
+			document.getElementById("type").value='0';
+		}
+		document.getElementById("head_path").value=window.user.head_path;	
 	}
 
 </script>
 </head>
 <body onload="init()">
-	 <div id="edit"> 
-      <form   action="../UserServlet?method=edit" method="post" enctype="multipart/form-data" name = "myform">
-      <h1>修改用户</h1>
-      <label for="账号">请选择用户账号</label>
-      <select id="emp_no" name="emp_no">
-      </select>
-      <label for="密码" >请输入用户密码</label>
-      <input type="text" name="emp_pass" id = "emp_pass"/>
-      <br/>
-      <br/>
-      请选择用户类型：
-      <input type="radio" name="type" value="管理员"  checked="true" id="type">管理员
-      <input type="radio" name="type" value="普通用户" id="type">普通用户
-      <br/>   
-      头像:<input type="file" name="head_image" id="head_path">
-      <button type="submit" class="button"  id="toadduser" onclick=" return checkFrom()">提交</button>
-      <button type="button" class="button" id="back">返回</button>
+  <div class="reg_div">
+    <p>编辑</p>
+    <ul class="reg_ul">
+      <li>
+          <span>账号</span>
+          <input type="text" name="" value="" placeholder="6-20位用户名" class="reg_user" id="emp_no">
+          <span class="tip user_hint"></span>
+      </li>
+      <li>
+          <span>用户类型：</span>
+          <select class="choosetype" id = "type">
+            <option value="0">普通用户</option>
+            <option value="1">管理员</option> 
+          </select>
+      </li>
+      <li>
+          <span>密码：</span>
+          <input type="text" name="password" value="" placeholder="6-20位密码" class="reg_password" id="emp_pass">
+          <span class="tip password_hint"></span>
+      </li>
+   
+      <li>
+          <span>头像：</span>
+         <input type="text" name="head_path" id="head_path" >
 
-
-      </form>
-      </div>
+          
+      </li>
+      <li>
+        <button type="button" name="button" class="red_button" id="register">注册</button>
+        <button type="button" name="button" class="red_button" onclick="back()">返回</button>
+      </li>
+    </ul>
+  </div>
+  <script type="text/javascript" src="../resetjs/jquery.min.js"></script>
+  <script type="text/javascript" src="../resetjs/script.js"></script>
 </body>
 </html>

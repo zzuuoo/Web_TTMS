@@ -80,6 +80,7 @@ public class LoginCheck extends HttpServlet {
 	            Cookie emp_pass=new Cookie("emp_pass",us.getEmp_pass()); 
 	            Cookie emp_addr = new Cookie("emp_addr", lemp.get(0).getEmp_addr());
 	            Cookie emp_email =new Cookie("emp_email",lemp.get(0).getEmp_email());
+	            Cookie emp_id = new Cookie("emp_id", lemp.get(0).getEmp_id()+"");
 	            Cookie emp_tel_num  = new Cookie("emp_tel_num", lemp.get(0).getEmp_tel_num());
 	              
 	            //3. 将该cookie写回到客户端  
@@ -90,6 +91,7 @@ public class LoginCheck extends HttpServlet {
 	            response.addCookie(emp_addr);
 	            response.addCookie(emp_email);
 	            response.addCookie(emp_tel_num);
+	            response.addCookie(emp_id);
 	            
 
 //				request.getSession().setAttribute("login", "ok");

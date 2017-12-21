@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,6 +67,7 @@ public class EmployeeServlet extends HttpServlet {
 	    {
 	        String emp_no = request.getParameter("emp_no");
 	        String emp_name = request.getParameter("emp_name");
+	        System.out.println(emp_name);
 	        String emp_tel_num = request.getParameter("emp_tel_num");
 	        String emp_addr = request.getParameter("emp_addr");
 	        String emp_email = request.getParameter("emp_email");
@@ -128,6 +130,7 @@ public class EmployeeServlet extends HttpServlet {
 	        String emp_addr = request.getParameter("emp_addr");
 	        String emp_email = request.getParameter("emp_email");
 	        employee emp = new employee();
+	        System.out.println("employeeuuuu");
 	        emp.setEmp_id(emp_id);
 	        emp.setEmp_no(emp_no);
 	        emp.setEmp_name(emp_name);
@@ -136,10 +139,23 @@ public class EmployeeServlet extends HttpServlet {
 	        emp.setEmp_email(emp_email);
 	        iEmployeeDAO dao = DAOFactory.createEmployeeDAO();
 	        int result = dao.update(emp);
+	        
 	        try
 	        {
-	            if (result==1)
-	                request.setAttribute("result", "更新成功!");
+	            if (result==1) {
+	            	request.setAttribute("result", "更新成功!");
+	            	if(request.getParameter("edit")!=null) {
+	            		Cookie emp_name1=new Cookie("emp_name",emp_name);       	      
+	     	            Cookie emp_addr1 = new Cookie("emp_addr", emp_addr);
+	     	            Cookie emp_email1 =new Cookie("emp_email",emp_email);
+	     	            Cookie emp_tel_num1  = new Cookie("emp_tel_num", emp_tel_num);
+	            		response.addCookie(emp_name1);
+	     	            response.addCookie(emp_addr1);
+	     	            response.addCookie(emp_email1);
+	     	            response.addCookie(emp_tel_num1);
+	            	}
+	            }
+	                
 	            else
 	                request.setAttribute("result", "更新失败!");
 	            request.setAttribute("employee", emp);

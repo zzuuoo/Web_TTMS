@@ -25,14 +25,11 @@
 
      <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
-        <a href="javascript:;" id="emp_name">
+        <a href="demo.html" id="emp_name">
           <img src="../images/用户1.png" class="layui-nav-img">
           用户名
         </a>
-        <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
-          <dd><a href="">安全设置</a></dd>
-        </dl>
+        
       </li>
       <li class="layui-nav-item"><a href="../ExitLogin">退出</a></li>
     </ul>
@@ -44,12 +41,6 @@
        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
           <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="main.html">首页</a>
-        </li>
-         <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="playmanage.html">影片管理</a>
-        </li>
-         <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="schedulemanage.html">演唱计划管理</a>
         </li>
         <li class="layui-nav-item">
           <a class="" href="studiomanage.html">演出厅管理</a>
@@ -117,10 +108,10 @@
   <thead>
    <tr>
      <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-      <th lay-data="{field:'emp_no', width:120, sort: true, edit: 'text'}">账号</th>
+      <th lay-data="{field:'emp_no', width:120, sort: true}">账号</th>
       <th lay-data="{field:'emp_pass', width:120, sort: true, edit: 'text'}">密码</th>
       <th lay-data="{field:'type', width:80,sort: true, edit: 'text'}">类型</th>
-      <th lay-data="{field:'head_path', edit: 'text', minWidth: 150}">头像</th>
+      <th lay-data="{field:'head_path', minWidth: 150}">头像</th>
      
 
       <th lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo1'}"></th>
@@ -173,36 +164,8 @@ layui.use('table', function(){
 
       });
     } else if(obj.event === 'edit1'){
-      layer.alert('编辑行：<br>'+ JSON.stringify(data));
+      layer.alert('请直接在表格内编辑');
 
-      // layer.open({
-      //   type: 1,
-      //   title: false,
-      //   closeBtn: 0,
-      //   shadeClose: true,
-      //   skin: 'yourclass',
-      //  content: '自定义HTML内容'
-      // });
-      // window.user={
-      //   emp_no:data.emp_no,
-      //   emp_pass:data.emp_pass,
-      //   type:data.type,
-      //   head_path:data.head_path
-      // }
-      // //获得窗口的垂直位置 
-      //      var iTop = (window.screen.availHeight - 30 - iHeight) / 2; 
-      //      //获得窗口的水平位置 
-      //      var iLeft = (window.screen.availWidth - 10 - iWidth) / 2; 
-      //       var win = window.open ("../edituser.html", "newwindow"," width=400, height=400,resizable=no"+",top=" + iTop + ',left=' + iLeft );
-
-      //   win.user=user;
-
-
-      //同步更新缓存对应的值
-    // obj.update({
-    //   username: '123'
-    //   ,title: 'xxx'
-    // });
     }
   });
   
@@ -247,7 +210,93 @@ layui.use('table', function(){
     active[type] ? active[type].call(this) : '';
   });
 });
+
+
+
+layui.use('table', function(){
+  var table = layui.table;
+  
+  //监听单元格编辑
+  table.on('edit(demo1)', function(obj){
+    var value = obj.value //得到修改后的值
+    ,data = obj.data //得到所在行所有键值
+    ,field = obj.field; //得到字段
+    // layer.msg('[emp_no: '+ data.emp_no +'] ' + field + ' 字段更改为：'+ value);
+		if(field=='type'){
+			
+			if(value!="0"&&value!="1"){
+				alert('请填入0/1,0代表普通用户，1代表管理员'+value);
+				location.reload();
+			}else{
+				 $.ajax({
+				        url: "../UserServlet",
+				        type: "POST",
+				        dataType:'json',
+				        data: {
+				            method: "update",
+				            emp_no: data.emp_no,
+				            emp_pass:data.emp_pass,
+				            type:data.type,
+				            head_path:data.head_path
+				    },
+				        success: function(data){    //    alert后台返回的参数
+				          
+				    },
+				      complete: function() {
+				      //请求完成的处理 ，如果没有，可以不用
+				       // alert(data.flag+data.type);
+				            console.log("更新成功");
+				            layer.msg('[emp_no: '+ data.emp_no +'] ' + field + ' 字段更改为：'+ value); 
+				             
+				        },
+				        error: function(){
+				            // alert('访问失败');
+				      }
+				        });
+			}
+		}else{
+			
+			 $.ajax({
+			        url: "../UserServlet",
+			        type: "POST",
+			        dataType:'json',
+			        data: {
+			            method: "update",
+			            emp_no: data.emp_no,
+			            emp_pass:data.emp_pass,
+			            type:data.type,
+			            head_path:data.head_path
+			    },
+			        success: function(data){    //    alert后台返回的参数
+			          
+			    },
+			      complete: function() {
+			      //请求完成的处理 ，如果没有，可以不用
+			       // alert(data.flag+data.type);
+			            console.log("更新成功");
+			            layer.msg('[emp_no: '+ data.emp_no +'] ' + field + ' 字段更改为：'+ value); 
+			             
+			        },
+			        error: function(){
+			            // alert('访问失败');
+			      }
+			        });
+		}
+		
+		
+		
+	
+
+
+     
+
+
+
+
+  });
+});
 </script>
+
 
     </div>
   </div>

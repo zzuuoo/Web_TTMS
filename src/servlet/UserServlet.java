@@ -62,6 +62,8 @@ public class UserServlet extends HttpServlet {
 	            searchByPage(request, response);
 	        else if(method.equalsIgnoreCase("getEmp_no"))
 	        	getEmp_no(request, response);
+	        else if(method.equalsIgnoreCase("edit"))
+	        	edit(request, response);
 	        else {
 	        	System.out.println("没有？");
 	        }
@@ -264,7 +266,103 @@ public class UserServlet extends HttpServlet {
 	        catch (Exception e)
 	        {
 	            e.printStackTrace();
+	        }      
+	        
+	        
+	    }
+	    
+	    private void edit(HttpServletRequest request, HttpServletResponse response) {
+        
+	   	 System.out.println("edit_user");
+	        user info2 = new user();
+	        
+	        String paramName = "", paramValue = "";
+	        // 创建该对象
+	        DiskFileItemFactory dff = new DiskFileItemFactory();
+	        // 指定在内存中缓存数据大小,单位为byte
+	        dff.setSizeThreshold(1024000);
+	        // 创建上传对象
+	        ServletFileUpload sfu = new ServletFileUpload(dff);
+	        // sfu.setHeaderEncoding("UTF-8");
+	        // 指定单个上传文件的最大尺寸(单个文件大小不超过2M)
+	        sfu.setFileSizeMax(1024 * 1024 * 2);
+	        // 指定一次上传多个文件的总尺寸(总文件大小不超过6M)
+	        // sfu.setSizeMax(1024 * 1024 * 6);
+	        try
+	        {
+	            List<FileItem> uploaditems = sfu.parseRequest(request);
+	            for (FileItem fileItem : uploaditems)
+	            {
+	                // 对应表单中的控件的name
+	                paramName = fileItem.getFieldName();
+	                System.out.print(paramName + ":");
+
+	                if (fileItem.isFormField())
+	                {
+	                    // 1.如果是普通表单控件，获取文本框中数据
+	                    // 重新编码,解决乱码
+	                    paramValue = new String(fileItem.getString().getBytes("ISO-8859-1"), "UTF-8");
+	                    System.out.println(paramValue);
+	                    if ("emp_no".equals(paramName))
+	                    	info2.setEmp_no(paramValue);
+	                    if ("emp_pass".equals(paramName))
+	                        info2.setEmp_pass(paramValue);
+	                    if ("type".equals(paramName)) {
+	                    	if("管理员".equals(paramValue)) {
+	                    		info2.setType(1);
+	                    	}else {
+	                    		info2.setType(0);
+	                    	}
+	                    }
+	                        
+	                }
+	                else
+	                {
+	                    // 2.如果是上传文件，则保存在服务器端应用根目录
+	                    // 获得文件大小
+	                    Long size = fileItem.getSize();
+	                    // 获得全路径文件名
+	                    String fileName = fileItem.getName();
+	                    // 截取文件名
+	                    fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
+	                    System.out.println("\n文件名：" + fileName + "\t大小：" + size + "byte");
+
+	                    // 将文件保存到指定的路径
+	                    File file = new File(getServletContext().getRealPath("/") + fileName);
+	                    fileItem.write(file);
+	                    info2.setHead_path(fileName);
+	                }
+	            }
 	        }
+	        catch (Exception e)
+	        {
+	            e.printStackTrace();
+	        }
+	        
+	        
+	        iUserDao iDao2 = DAOFactory.createUserDAO();
+	        Flag result2 = new Flag();
+			result2.setFlag("0");
+			result2.setFlag(iDao2.update(info2)+"");
+	        try
+	        {
+	            if (result2.getFlag().equals("1"))
+	                request.setAttribute("result", "更新成功!");
+	            else
+	                request.setAttribute("result", "更新失败!");
+//	            JSONObject object = JSONObject.fromObject(result);
+//	            PrintWriter out = response.getWriter();
+//	    		out.write(object.toString());
+//	    		out.close();
+	    		response.sendRedirect("./employer/main.html");
+//	    		return;	
+//	            request.getRequestDispatcher("./jump.jsp").forward(request, response);
+	        }
+	        catch (Exception e)
+	        {
+	            e.printStackTrace();
+	        }
+	      
 	    }
 
 	    private void search(HttpServletRequest request, HttpServletResponse response)

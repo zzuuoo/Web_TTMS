@@ -60,7 +60,7 @@ public class SeatDAO implements iSeatDAO {
 			pstmt.executeUpdate();
 				//执行sql语句
 				
-			System.out.println("employee插入成功");
+			System.out.println("seat插入成功");
 			
 			return 1;
 			//操作成功返回1

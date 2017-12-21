@@ -19,29 +19,8 @@
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/bootstrap.min.css">
 <script src="../js/jquery.min.js"></script>
+<script src="../initJS/init.js"></script>
 <script>
-	function init() {
-		var head = "<img src=\"../img/login.jpg\" class=\"layui-nav-img\" id = \"head_img\">";
-		document.getElementById("emp_name").innerHTML = head
-				+ getCookie("emp_name");
-		// document.getElementById("emp_name").innerHTML=head+'游客';
-	}
-	function getCookie(c_name)
-	{
-	if (document.cookie.length>0)
-	  {
-	  c_start=document.cookie.indexOf(c_name + "=")
-	  if (c_start!=-1)
-	    { 
-	    c_start=c_start + c_name.length+1 
-	    c_end=document.cookie.indexOf(";",c_start)
-	    if (c_end==-1) c_end=document.cookie.length
-	    return unescape(document.cookie.substring(c_start,c_end))
-	    } 
-	  }
-	return ""
-	}
-	
 	function editseat(obj){
 		var tr=$(obj).parent().parent().parent();
 		var id=tr.children("#Studio_id").text();
@@ -56,17 +35,10 @@
 			<div class="layui-logo">最接地气票务管理系统</div>
 
 			<ul class="layui-nav layui-layout-right">
-				<li class="layui-nav-item"><a href="javascript:;" id="emp_name">
+				<li class="layui-nav-item"><a href="demo.html" id="emp_name">
 						<img src="../images/鹿鹿.png" class="layui-nav-img"> 用户名
 				</a>
-					<dl class="layui-nav-child">
-						<dd>
-							<a href="">基本资料</a>
-						</dd>
-						<dd>
-							<a href="">安全设置</a>
-						</dd>
-					</dl></li>
+					</li>
 				<li class="layui-nav-item"><a href="../index.html">退出</a></li>
 			</ul>
 		</div>
@@ -77,10 +49,6 @@
 				<ul class="layui-nav layui-nav-tree" lay-filter="test">
 					<li class="layui-nav-item layui-nav-itemed"><a class=""
 						href="main.html">首页</a></li>
-					<li class="layui-nav-item layui-nav-itemed"><a class=""
-						href="playmanage.html">影片管理</a></li>
-					<li class="layui-nav-item layui-nav-itemed"><a class=""
-						href="schedulemanage.html">演唱计划管理</a></li>
 					<li class="layui-nav-item"><a class=""
 						href="studiomanage.html">演出厅管理</a></li>
 					<li class="layui-nav-item"><a

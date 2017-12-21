@@ -5,24 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>layout 后台大布局 - Layui</title>
 <link rel="stylesheet" href="../css/layui.css">
+  <link rel="stylesheet" href="../resetcss/normalize.css">
+  <link rel="stylesheet" href="../resetcss/style.css">
  <script src="../initJS/init.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="initmessage()">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
     <div class="layui-logo">最接地气票务管理系统</div>
 
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
-        <a href="javascript:;"  id="emp_name">
+        <a href="demo.html"  id="emp_name">
           <img src="../images/鹿鹿.png" class="layui-nav-img">
           用户名
         </a>
-        <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
-          <dd><a href="">安全设置</a></dd>
-        </dl>
+      
       </li>
       <li class="layui-nav-item"><a href="../ExitLogin">退出</a></li>
     </ul>
@@ -35,18 +34,12 @@
           <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="main.html">首页</a>
         </li>
-         <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="playmanage.html">影片管理</a>
-        </li>
-         <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="schedulemanage.html">演唱计划管理</a>
-        </li>
         <li class="layui-nav-item">
           <a class="" href="studiomanage.html">演出厅管理</a>
          
         </li>
         <li class="layui-nav-item">
-          <a href="seatmanage.html">座位管理</a>
+          <a href="../SeatManageServlet?mothed=searchByPage&currentPage=1">座位管理</a>
 
         </li>
         <li class="layui-nav-item">
@@ -59,7 +52,56 @@
   
   <div class="layui-body">
     <!-- 内容主体区域 -->
-    <div style="padding: 15px;">内容主体区域</div>
+    <div style="padding: 15px;">
+
+
+<form id="uploadForm">
+  <div class="reg_div">
+    <p>编辑个人信息</p>
+    <ul class="reg_ul">
+      <li>
+          <span>昵称</span>
+          <input type="text" name="" value="" placeholder="6-20位" id="emp_name1">
+          <span class="tip user_hint"></span>
+      </li>
+      <li>
+          <span>住址</span>
+          <input type="text" name="" value=""  class="reg_user" id="emp_addr">
+      </li>
+      <li>
+          <span>电话</span>
+          <input type="number" name="" value="" placeholder="手机号" class="reg_mobile" id="emp_tel_num">
+          <span class="tip mobile_hint"></span>
+      </li>
+   
+      <li>
+          <span>邮箱</span>
+         <input type="text" name="" value="" placeholder="邮箱" class="reg_email" id="emp_email">
+          <span class="tip email_hint"></span>
+
+      </li>
+
+      <li>
+        <span>头像</span>
+         <input type="file" name="" id="head_path">
+
+      </li>
+
+      <li>
+        <button type="button" name="button" class="red_button" id="register">保存</button>
+        <button type="button" name="button" class="red_button1" id="cencle" onclick="javascript:history.back(-1);">返回</button>
+      </li>
+    </ul>
+
+    </div>
+
+</form>
+
+
+
+
+
+
   </div>
   
   <div class="layui-footer">
@@ -68,12 +110,28 @@
   </div>
 </div>
 <script src="../layui/layui.js"></script>
+  <script type="text/javascript" src="../resetjs/jquery.min.js"></script>
+  <script type="text/javascript" src="../resetjs/script.js"></script>
 <script>
 //JavaScript代码区域
-layui.use('element', function(){
-  var element = layui.element;
-  
-});
+ function doUpload() {    
+     var formData = new FormData($( "#uploadForm" )[0]);    
+     $.ajax({    
+          url: '<%=basePath%>UploadImage' ,  /*这是处理文件上传的servlet*/  
+          type: 'POST',    
+          data: formData,    
+          async: false,    
+          cache: false,    
+          contentType: false,    
+          processData: false,    
+          success: function (returndata) {    
+              document.getElementById("showpic").src="<%=basePath%>UploadImage?picture=showpic";/*这是预览图片用的，自己在文件上传表单外添加*/  
+          },    
+          error: function (returndata) {    
+              alert(returndata);    
+          }    
+     });   
+     } 
 
 
 </script>
